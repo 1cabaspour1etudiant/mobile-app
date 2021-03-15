@@ -8,6 +8,7 @@ import {
 } from '@react-navigation/stack';
 
 import LoginScreen from './screens/Login/Login';
+import RegisterScreen from './screens/Register/Register';
 
 import Store from './store';
 import * as RootNavigation from './RootNavigation';
@@ -30,6 +31,12 @@ export default function App() {
             name="LoginScreen"
             component={LoginScreen}
           />
+
+          <Stack.Screen
+            name="RegisterScreen"
+            component={RegisterScreen}
+          />
+
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>
