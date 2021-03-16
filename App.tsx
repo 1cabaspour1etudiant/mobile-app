@@ -13,6 +13,7 @@ import { ApplicationProvider, IconRegistry } from '@ui-kitten/components';
 import LoginScreen from './src/screens/Login/Login';
 import RegisterScreen from './src/screens/Register/Register';
 import MemberSpaceScreen from './src/screens/Private/MemberSpace';
+import ForgotPasswordSendCodeScreen from './src/screens/ForgotPassword/ForgotPasswordSendCodeScreen';
 
 import Store from './store';
 import * as RootNavigation from './RootNavigation';
@@ -57,6 +58,11 @@ export default function App() {
                   <Stack.Screen
                     name="MemberSpaceScreen"
                     component={MemberSpaceScreen}
+                  />
+
+                  <Stack.Screen
+                    name="ForgotPasswordSendCodeScreen"
+                    component={ForgotPasswordSendCodeScreen}
                   />
 
                 </Stack.Navigator>
