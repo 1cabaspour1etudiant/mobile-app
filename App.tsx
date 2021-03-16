@@ -18,6 +18,7 @@ import ForgotPasswordSendCodeScreen from './src/screens/ForgotPassword/ForgotPas
 import Store from './store';
 import * as RootNavigation from './RootNavigation';
 import { EvaIconsPack } from '@ui-kitten/eva-icons';
+import { NofificationContextProvider } from './src/NotificationModal';
 
 const Stack = createStackNavigator();
 
@@ -34,6 +35,7 @@ export default function App() {
     <>
       <IconRegistry icons={EvaIconsPack} />
       <ApplicationProvider {...eva} theme={eva.light}>
+        <NofificationContextProvider>
         {
           loaded && (
             <Provider store={Store}>
@@ -70,6 +72,7 @@ export default function App() {
             </Provider>
           )
         }
+        </NofificationContextProvider>
       </ApplicationProvider>
     </>
   );
