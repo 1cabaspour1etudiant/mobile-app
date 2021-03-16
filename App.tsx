@@ -11,9 +11,9 @@ import * as eva from '@eva-design/eva';
 import { ApplicationProvider, IconRegistry } from '@ui-kitten/components';
 
 import LoginScreen from './src/screens/Login/Login';
-import RegisterScreen from './src/screens/Register/Register';
 import MemberSpaceScreen from './src/screens/Private/MemberSpace';
 import ForgotPasswordSendCodeScreen from './src/screens/ForgotPassword/ForgotPasswordSendCodeScreen';
+import EmailAndPasswordScreen from './src/screens/Register/EmailAndPassword';
 
 import Store from './store';
 import * as RootNavigation from './RootNavigation';
@@ -53,11 +53,6 @@ export default function App() {
                   />
 
                   <Stack.Screen
-                    name="RegisterScreen"
-                    component={RegisterScreen}
-                  />
-
-                  <Stack.Screen
                     name="MemberSpaceScreen"
                     component={MemberSpaceScreen}
                   />
@@ -65,6 +60,11 @@ export default function App() {
                   <Stack.Screen
                     name="ForgotPasswordSendCodeScreen"
                     component={ForgotPasswordSendCodeScreen}
+                  />
+
+                  <Stack.Screen
+                    name="EmailAndPasswordScreen"
+                    component={EmailAndPasswordScreen}
                   />
 
                 </Stack.Navigator>

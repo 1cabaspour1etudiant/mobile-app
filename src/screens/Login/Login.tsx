@@ -56,7 +56,7 @@ export default function LoginScreen() {
   }, []);
 
   const toggleIscription = useCallback(() => {
-    navigate('RegisterScreen');
+    navigate('EmailAndPasswordScreen');
   }, [navigate]);
 
   const toggleForgotPassword = useCallback(() => {
