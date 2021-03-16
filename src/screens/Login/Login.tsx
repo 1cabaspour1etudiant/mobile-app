@@ -5,6 +5,7 @@ import InputPassword from '../../components/InputPassword';
 import { useDispatch, useSelector } from 'react-redux';
 import { actionLoginSetEmail, actionLoginSetPassword } from './action';
 import { Text, Button } from '@ui-kitten/components';
+import { postLogin } from '../../api/Auth';
 
 const selector = ({ login:{ email = '', password = '' } }) => ({ email, password });
 
@@ -19,6 +20,16 @@ export default function LoginScreen() {
   const toggleChangePassword = useCallback((password: string) => {
     dispatch(actionLoginSetPassword(password));
   }, [dispatch]);
+
+  const toggleConnexion = useCallback(() => {
+    postLogin(email, password)
+      .then((access_token: string) => {
+        console.log(access_token);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, [email, password]);
 
   return (
     <Layout style={styles.container} level='1'>
@@ -40,7 +51,12 @@ export default function LoginScreen() {
         />
   
         <View style={styles.buttonContainer}>
-          <Button style={styles.button} appearance='ghost' status='basic'>
+          <Button
+            style={styles.button}
+            appearance='ghost'
+            status='basic'
+            onPress={toggleConnexion}
+          >
             Connexion
           </Button>
           <Button style={styles.button} appearance='ghost' status='basic'>
