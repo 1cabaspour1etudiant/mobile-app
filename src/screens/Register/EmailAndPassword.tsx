@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigation } from '@react-navigation/core';
 import InputPassword from '../../components/InputPassword';
 import { actionRegisterSetEmail, actionRegisterSetPassword } from './action';
+import { getUserEmailIsAvailable } from '../../api/User';
 
 const selector = ({
     register: {
@@ -18,9 +19,19 @@ export default function EmailAndPassword() {
     const { email, password } = useSelector(selector);
     const dispatch = useDispatch();
     const { navigate } = useNavigation();
-    const [emailValide, setEmailValide] = useState(true);
+    const [emailPatternIsValid, setEmailPatternIsValid] = useState(false);
+    const [passwordIsValid, setPasswordIsValid] = useState(false);
+    const [emailIsAvailable, setEmailIsAvailable] = useState(true);
 
     const toggleChangeEmail = useCallback((email) => {
+        getUserEmailIsAvailable(email)
+            .then((emailIsAvailable: boolean) => {
+                setEmailIsAvailable(emailIsAvailable);
+                setEmailPatternIsValid(true);
+            })
+            .catch(() => {
+                setEmailPatternIsValid(false);
+            });
         dispatch(actionRegisterSetEmail(email));
     }, [dispatch]);
 
@@ -31,13 +42,27 @@ export default function EmailAndPassword() {
         }
     }, []);
 
-    const toggleChangePassword = useCallback((password) => {
+    const toggleChangePassword = useCallback((password: string) => {
+        const passwordIsValid = (
+            /[A-Z]/.test(password)
+            && /[0-9]/.test(password)
+            && /(?=.{8,32})/.test(password)
+        );
+
+        setPasswordIsValid(passwordIsValid);
         dispatch(actionRegisterSetPassword(password));
     }, []);
 
     const goToMainInfos = useCallback(() => {
-        navigate('RegisterMainInfosScreen');
-    }, [navigate]);
+        if (emailPatternIsValid && passwordIsValid && emailIsAvailable) {
+            navigate('RegisterMainInfosScreen');
+        }
+    }, [
+        emailPatternIsValid,
+        passwordIsValid,
+        emailIsAvailable,
+        navigate,
+    ]);
 
     return (
         <Layout style={styles.container} level='1'>
@@ -46,13 +71,24 @@ export default function EmailAndPassword() {
             </View>
             <View style={{ flex:2 }}>
                 {
-                    !emailValide && (
+                    !emailIsAvailable && (
                         <Text
                             style={styles.text}
                             status='danger'
                         >
                             Cette adresse email n'est pas disponible
                         </Text>
+                    )
+                }
+
+                {
+                    !passwordIsValid && (
+                        <>
+                            <Text style={styles.text} status='danger'>Votre mot de passe doit avoir au moins:</Text>
+                            <Text style={styles.text} status='danger'>- Une majuscule</Text>
+                            <Text style={styles.text} status='danger'>- Huit characteres</Text>
+                            <Text style={styles.text} status='danger'>- Un chiffre</Text>
+                        </>
                     )
                 }
 
@@ -65,12 +101,14 @@ export default function EmailAndPassword() {
                     returnKeyType='next'
                     onSubmitEditing={toggleEmailSubmitEditing}
                     blurOnSubmit={false}
+                    status={ emailPatternIsValid || email === '' ? 'primary' : 'danger' }
                 />
 
                 <InputPassword
                     ref={inputRef}
                     onChanchValue={toggleChangePassword}
                     value={password}
+                    status={ passwordIsValid || password === '' ? 'primary' : 'danger' }
                 />
 
                 <Button 
