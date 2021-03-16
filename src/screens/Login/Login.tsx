@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useRef } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Input, Layout } from '@ui-kitten/components';
 import InputPassword from '../../components/InputPassword';
@@ -12,9 +12,17 @@ import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 const selector = ({ login:{ email = '', password = '' } }) => ({ email, password });
 
 export default function LoginScreen() {
+  const inputRef = useRef(null);
   const { email, password } = useSelector(selector);
   const dispatch = useDispatch();
   const { navigate } = useNavigation();
+
+  const toggleEmailSubmitEditing = useCallback(() => {
+    if (inputRef.current) {
+      const current = inputRef.current as any;
+      current.focus();
+    }
+  }, []);
 
   const toggleChangeEmail = useCallback((email: string) => {
     dispatch(actionLoginSetEmail(email));
@@ -56,9 +64,14 @@ export default function LoginScreen() {
           value={email}
           placeholder='Email adress'
           onChangeText={toggleChangeEmail}
+          autoFocus={true}
+          returnKeyType='next'
+          onSubmitEditing={toggleEmailSubmitEditing}
+          blurOnSubmit={false}
         />
 
         <InputPassword
+          ref={inputRef}
           onChanchValue={toggleChangePassword}
           value={password}
         />
