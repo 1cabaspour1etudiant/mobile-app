@@ -6,12 +6,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { actionLoginSetEmail, actionLoginSetPassword } from './action';
 import { Text, Button } from '@ui-kitten/components';
 import { postLogin } from '../../api/Auth';
+import { useNavigation } from '@react-navigation/core';
 
 const selector = ({ login:{ email = '', password = '' } }) => ({ email, password });
 
 export default function LoginScreen() {
   const { email, password } = useSelector(selector);
   const dispatch = useDispatch();
+  const { navigate } = useNavigation();
 
   const toggleChangeEmail = useCallback((email: string) => {
     dispatch(actionLoginSetEmail(email));
@@ -25,11 +27,12 @@ export default function LoginScreen() {
     postLogin(email, password)
       .then((access_token: string) => {
         console.log(access_token);
+        navigate("MemberSpaceScreen");
       })
       .catch((error) => {
         console.log(error);
       });
-  }, [email, password]);
+  }, [email, password, navigate]);
 
   return (
     <Layout style={styles.container} level='1'>
