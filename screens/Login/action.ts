@@ -1,2 +1,0 @@
-export const LOGIN_SET_EMAIL = 'LOGIN_SET_EMAIL';
-export const LOGIN_SET_PASSWORD = 'LOGIN_SET_PASSWORD';

@@ -3,7 +3,7 @@ import {
     combineReducers,
 } from 'redux';
 
-import login from './screens/Login/reducer';
+import login from './src/screens/Login/reducer';
 
 
 const rootReducer = combineReducers({
