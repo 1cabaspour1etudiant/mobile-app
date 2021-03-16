@@ -1,5 +1,5 @@
 import { API_URL } from '@env';
-import { jsonMapper } from "./utils";
+import { checkError, jsonMapper } from "./utils";
 
 export function postLogin(email: string, password: string) {
     const url = `${API_URL}/auth/login`;
@@ -14,6 +14,7 @@ export function postLogin(email: string, password: string) {
     };
 
     return fetch(url, options)
+        .then(checkError)
         .then(jsonMapper)
         .then(({ access_token = '' }) => {
             return access_token;
