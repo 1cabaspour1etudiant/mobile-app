@@ -3,7 +3,7 @@ import { StyleSheet, View } from 'react-native';
 import { Input, Layout } from '@ui-kitten/components';
 import InputPassword from '../../components/InputPassword';
 import { useDispatch, useSelector } from 'react-redux';
-import { actionLoginSetEmail, actionLoginSetPassword } from './action';
+import { actionClearLogin, actionLoginSetEmail, actionLoginSetPassword } from './action';
 import { Text, Button } from '@ui-kitten/components';
 import { postLogin } from '../../api/Auth';
 import { useNavigation } from '@react-navigation/core';
@@ -28,6 +28,7 @@ export default function LoginScreen() {
       .then((access_token: string) => {
         console.log(access_token);
         navigate("MemberSpaceScreen");
+        dispatch(actionClearLogin());
       })
       .catch((error) => {
         console.log(error);

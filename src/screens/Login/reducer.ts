@@ -1,6 +1,7 @@
 import {
     LOGIN_SET_EMAIL,
     LOGIN_SET_PASSWORD,
+    LOGIN_CLEAR,
 } from './action';
 
 const initialState = {
@@ -16,6 +17,9 @@ export default (state = initialState, action: any) => {
 
         case LOGIN_SET_PASSWORD:
             return {...state, password: action.value};
+
+        case LOGIN_CLEAR:
+            return {...state, email: '', password: ''};
 
         default:
             return state;
