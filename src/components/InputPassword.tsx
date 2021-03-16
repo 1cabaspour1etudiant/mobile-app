@@ -5,6 +5,7 @@ import { Icon, Input } from '@ui-kitten/components';
 function InputPassword ({
     value = '',
     onChanchValue = (v:string) => {},
+    status = '',
 }, ref: React.LegacyRef<Input>) {
     const [secureTextEntry, setSecureTextEntry] = React.useState(true);
 
@@ -26,6 +27,7 @@ function InputPassword ({
             accessoryRight={renderIcon}
             secureTextEntry={secureTextEntry}
             onChangeText={nextValue => onChanchValue(nextValue)}
+            status={status}
         />
     );
 };
