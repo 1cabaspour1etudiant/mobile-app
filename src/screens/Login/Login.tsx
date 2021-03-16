@@ -7,6 +7,7 @@ import { actionClearLogin, actionLoginSetEmail, actionLoginSetPassword } from '.
 import { Text, Button } from '@ui-kitten/components';
 import { postLogin } from '../../api/Auth';
 import { useNavigation } from '@react-navigation/core';
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 const selector = ({ login:{ email = '', password = '' } }) => ({ email, password });
 
@@ -34,6 +35,14 @@ export default function LoginScreen() {
         console.log(error);
       });
   }, [email, password, navigate]);
+
+  const toggleIscription = useCallback(() => {
+    navigate('RegisterScreen');
+  }, [navigate]);
+
+  const toggleForgotPassword = useCallback(() => {
+    navigate('ForgotPasswordSendCodeScreen');
+  }, [navigate]);
 
   return (
     <Layout style={styles.container} level='1'>
@@ -63,11 +72,18 @@ export default function LoginScreen() {
           >
             Connexion
           </Button>
-          <Button style={styles.button} appearance='ghost' status='basic'>
+          <Button
+            style={styles.button}
+            appearance='ghost'
+            status='basic'
+            onPress={toggleIscription}
+          >
             Inscription
           </Button>
         </View>
-        <Text style={styles.text} category='h6'>Mot de passe oublié ?</Text>
+        <TouchableWithoutFeedback onPress={toggleForgotPassword}>
+          <Text style={styles.text} category='h6'>Mot de passe oublié ?</Text>
+        </TouchableWithoutFeedback>
       </View>
     </Layout>
   );
