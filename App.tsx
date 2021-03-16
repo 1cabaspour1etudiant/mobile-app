@@ -14,6 +14,7 @@ import LoginScreen from './src/screens/Login/Login';
 import MemberSpaceScreen from './src/screens/Private/MemberSpace';
 import ForgotPasswordSendCodeScreen from './src/screens/ForgotPassword/ForgotPasswordSendCodeScreen';
 import EmailAndPasswordScreen from './src/screens/Register/EmailAndPassword';
+import RegisterMainInfosScreen from './src/screens/Register/RegisterMainInfos';
 
 import Store from './store';
 import * as RootNavigation from './RootNavigation';
@@ -65,6 +66,11 @@ export default function App() {
                   <Stack.Screen
                     name="EmailAndPasswordScreen"
                     component={EmailAndPasswordScreen}
+                  />
+
+                  <Stack.Screen
+                    name="RegisterMainInfosScreen"
+                    component={RegisterMainInfosScreen}
                   />
 
                 </Stack.Navigator>
