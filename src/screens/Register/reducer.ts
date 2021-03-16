@@ -27,7 +27,7 @@ const initialState = {
 
 export default function(state = initialState, action: any) {
     switch(action.type) {
-        case REGISTER_SET_ADRESS:
+        case REGISTER_SET_EMAIL:
             return {...state, email: action.value};
 
         case REGISTER_SET_PASSWORD:
