@@ -2,7 +2,7 @@ export const REGISTER_SET_EMAIL = 'REGISTER_SET_EMAIL';
 export const REGISTER_SET_PASSWORD = 'REGISTER_SET_PASSWORD';
 export const REGISTER_SET_PHONE_NUMBER = 'REGISTER_SET_PHONE_NUMBER';
 export const REGISTER_SET_FIRSTNAME = 'REGISTER_SET_FIRSTNAME';
-export const REGISTER_SET_NAME = 'REGISTER_SET_NAME';
+export const REGISTER_SET_LASTNAME = 'REGISTER_SET_LASTNAME';
 export const REGISTER_SET_ADRESS = 'REGISTER_SET_ADRESS';
 export const REGISTER_SET_CITY = 'REGISTER_SET_CITY';
 export const REGISTER_SET_ZIP_CODE = 'REGISTER_SET_ZIP_CODE';
@@ -37,9 +37,9 @@ export function actionRegisterSetFirstname(firstname:  string) {
     };
 }
 
-export function actionRegisterSetName(name: string) {
+export function actionRegisterSetLastname(name: string) {
     return {
-        type: REGISTER_SET_NAME,
+        type: REGISTER_SET_LASTNAME,
         value: name,
     };
 }
