@@ -1,4 +1,4 @@
-import React, { useCallback, useRef } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Input, Layout } from '@ui-kitten/components';
 import InputPassword from '../../components/InputPassword';
@@ -8,6 +8,7 @@ import { Text, Button } from '@ui-kitten/components';
 import { postLogin } from '../../api/Auth';
 import { useNavigation } from '@react-navigation/core';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import { useNotifiCationModal } from '../../NotificationModal';
 
 const selector = ({ login:{ email = '', password = '' } }) => ({ email, password });
 
@@ -16,6 +17,8 @@ export default function LoginScreen() {
   const { email, password } = useSelector(selector);
   const dispatch = useDispatch();
   const { navigate } = useNavigation();
+
+  const { showNotification, hideNotification } = useNotifiCationModal();
 
   const toggleEmailSubmitEditing = useCallback(() => {
     if (inputRef.current) {
@@ -33,16 +36,19 @@ export default function LoginScreen() {
   }, [dispatch]);
 
   const toggleConnexion = useCallback(() => {
+    showNotification();
     postLogin(email, password)
-      .then((access_token: string) => {
-        console.log(access_token);
+      .then(() => {
         navigate("MemberSpaceScreen");
         dispatch(actionClearLogin());
       })
       .catch((error) => {
         console.log(error);
+      })
+      .finally(() => {
+        hideNotification();
       });
-  }, [email, password, navigate]);
+  }, []);
 
   const toggleIscription = useCallback(() => {
     navigate('RegisterScreen');
@@ -75,7 +81,7 @@ export default function LoginScreen() {
           onChanchValue={toggleChangePassword}
           value={password}
         />
-  
+
         <View style={styles.buttonContainer}>
           <Button
             style={styles.button}
