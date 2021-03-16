@@ -2,7 +2,10 @@ import React from 'react';
 import { TouchableWithoutFeedback } from 'react-native';
 import { Icon, Input } from '@ui-kitten/components';
 
-export default function InputPassword ({ value = '', onChanchValue = (v:string) => {} }) {
+function InputPassword ({
+    value = '',
+    onChanchValue = (v:string) => {},
+}, ref: React.LegacyRef<Input>) {
     const [secureTextEntry, setSecureTextEntry] = React.useState(true);
 
     const toggleSecureEntry = () => {
@@ -17,11 +20,14 @@ export default function InputPassword ({ value = '', onChanchValue = (v:string) 
 
     return (
         <Input
-        value={value}
-        placeholder='Password'
-        accessoryRight={renderIcon}
-        secureTextEntry={secureTextEntry}
-        onChangeText={nextValue => onChanchValue(nextValue)}
+            ref={ref}
+            value={value}
+            placeholder='Password'
+            accessoryRight={renderIcon}
+            secureTextEntry={secureTextEntry}
+            onChangeText={nextValue => onChanchValue(nextValue)}
         />
     );
 };
+
+export default React.forwardRef(InputPassword);
