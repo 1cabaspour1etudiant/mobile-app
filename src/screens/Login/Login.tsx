@@ -17,6 +17,7 @@ export default function LoginScreen() {
   const { email, password } = useSelector(selector);
   const dispatch = useDispatch();
   const { navigate } = useNavigation();
+  const [connectionFailed, setConnectionFailed] = useState(false);
 
   const { showNotification, hideNotification } = useNotifiCationModal();
 
@@ -39,10 +40,14 @@ export default function LoginScreen() {
     showNotification();
     postLogin(email, password)
       .then(() => {
+        if (connectionFailed) {
+          setConnectionFailed(false);
+        }
         navigate("MemberSpaceScreen");
         dispatch(actionClearLogin());
       })
       .catch((error) => {
+        setConnectionFailed(true);
         console.log(error);
       })
       .finally(() => {
@@ -65,6 +70,11 @@ export default function LoginScreen() {
       </View>
 
       <View style={{ flex:2 }}>
+        {
+          connectionFailed && (
+            <Text style={styles.text} status='danger'>Email ou mot de passe incorrect</Text>
+          )
+        }
         <Input
           style={styles.input}
           value={email}
