@@ -12,6 +12,7 @@ import { ApplicationProvider, IconRegistry } from '@ui-kitten/components';
 
 import LoginScreen from './src/screens/Login/Login';
 import RegisterScreen from './src/screens/Register/Register';
+import MemberSpaceScreen from './src/screens/Private/MemberSpace';
 
 import Store from './store';
 import * as RootNavigation from './RootNavigation';
@@ -51,6 +52,11 @@ export default function App() {
                   <Stack.Screen
                     name="RegisterScreen"
                     component={RegisterScreen}
+                  />
+
+                  <Stack.Screen
+                    name="MemberSpaceScreen"
+                    component={MemberSpaceScreen}
                   />
 
                 </Stack.Navigator>
