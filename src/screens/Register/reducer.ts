@@ -12,8 +12,9 @@ import {
 } from './action';
 
 import { activityAreaList, statusList } from './lists';
+import { UserRegister } from './types';
 
-const initialState = {
+const initialState: UserRegister = {
     email: '',
     password: '',
     phoneNumber: '',
@@ -26,7 +27,7 @@ const initialState = {
     activityArea: activityAreaList[0],
 };
 
-export default function(state = initialState, action: any) {
+export default function(state = initialState, action: any): UserRegister {
     switch(action.type) {
         case REGISTER_SET_EMAIL:
             return {...state, email: action.value};
