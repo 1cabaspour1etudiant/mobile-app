@@ -11,6 +11,7 @@ import {
     REGISTER_SET_ACTIVITY_AREA,
 } from './action';
 
+import { activityAreaList, statusList } from './lists';
 
 const initialState = {
     email: '',
@@ -21,8 +22,8 @@ const initialState = {
     adress: '',
     city: '',
     zipCode: '',
-    status: 'Etudiant',
-    activityArea: '',
+    status: statusList[0],
+    activityArea: activityAreaList[0],
 };
 
 export default function(state = initialState, action: any) {
