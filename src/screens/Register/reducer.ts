@@ -21,7 +21,7 @@ const initialState = {
     adress: '',
     city: '',
     zipCode: '',
-    status: '',
+    status: 'Etudiant',
     activityArea: '',
 };
 
