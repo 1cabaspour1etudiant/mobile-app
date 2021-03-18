@@ -1,7 +1,13 @@
 export const jsonMapper = (res: Response) => res.json();
-export const checkError = (res: Response) => {
+export const checkError = async (res: Response) => {
     if (res.status !== 200 && res.status !== 201) {
-        throw res.status;
+        let json;
+        try {
+            json = await res.json();
+        } catch(e) {
+            throw new Error(`No json error with code ${res.status}`);
+        }
+        throw json;
     }
     return res;
 };
