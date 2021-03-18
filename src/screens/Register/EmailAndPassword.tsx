@@ -67,7 +67,7 @@ export default function EmailAndPassword() {
     return (
         <Layout style={styles.container} level='1'>
             <View style={styles.titleContainer}>
-                <Text style={styles.text} category='h1'>Inscriver vous</Text>
+                <Text style={styles.text} category='h1'>Inscrivez-vous</Text>
             </View>
             <View style={{ flex:2 }}>
                 {
@@ -95,13 +95,16 @@ export default function EmailAndPassword() {
                 <Input
                     style={styles.input}
                     value={email}
-                    placeholder='Email adress'
+                    placeholder='Adresse email'
                     onChangeText={toggleChangeEmail}
                     autoFocus={true}
                     returnKeyType='next'
                     onSubmitEditing={toggleEmailSubmitEditing}
                     blurOnSubmit={false}
                     status={ emailPatternIsValid || email === '' ? 'primary' : 'danger' }
+                    keyboardType='email-address'
+                    textContentType='emailAddress'
+                    autoCompleteType='email'
                 />
 
                 <InputPassword
