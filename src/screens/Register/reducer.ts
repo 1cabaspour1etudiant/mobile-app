@@ -17,7 +17,7 @@ import { UserRegister } from './types';
 const initialState: UserRegister = {
     email: '',
     password: '',
-    phoneNumber: '',
+    tel: '',
     firstname: '',
     lastname:'',
     adress: '',
@@ -36,7 +36,7 @@ export default function(state = initialState, action: any): UserRegister {
             return {...state, password: action.value};
 
         case REGISTER_SET_PHONE_NUMBER:
-            return {...state, phoneNumber: action.value};
+            return {...state, tel: action.value};
 
         case REGISTER_SET_FIRSTNAME:
             return {...state, firstname: action.value};

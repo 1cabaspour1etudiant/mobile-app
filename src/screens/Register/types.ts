@@ -1,7 +1,7 @@
 export interface UserRegister {
     email: string;
     password: string;
-    phoneNumber: string;
+    tel: string;
     firstname: string;
     lastname: string;
     adress: string;
