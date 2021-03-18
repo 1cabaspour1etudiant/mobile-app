@@ -1,6 +1,6 @@
 import { API_URL } from '@env';
 import { UserRegister } from '../screens/Register/types';
-import { checkError, jsonMapper } from './utils';
+import { checkError, getAccessToken, jsonMapper } from './utils';
 import Store from '../../store';
 import { actionSetToken } from '../screens/token.action';
 
@@ -38,5 +38,28 @@ export function postUser(user: UserRegister) {
 }
 
 export async function putUserMePicture(imageUri: string) {
+    const accessToken = await getAccessToken();
+    const url = `${API_URL}/user/me/profilePicture`;
+    const headers = new Headers();
 
+    headers.append('Authorization', `Bearer ${accessToken}`);
+    headers.append('Content-Type', 'multipart/form-data');
+
+    const formData = new FormData();
+    const fileDesc = {
+        uri: imageUri,
+        type: 'image/jpg',
+        name: 'profilePicture.jpg',
+    };
+
+    formData.append('file', fileDesc as any);
+
+    const options: RequestInit = {
+        method: 'PUT',
+        body: formData,
+        headers,
+    };
+
+    return fetch(url, options)
+        .then(checkError);
 }
