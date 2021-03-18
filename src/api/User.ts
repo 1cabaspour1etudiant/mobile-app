@@ -20,9 +20,13 @@ export function getUserEmailIsAvailable(email: string): Promise<boolean> {
 export function postUser(user: UserRegister) {
     const url = `${API_URL}/user`;
 
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+
     const options: RequestInit = {
         method: 'POST',
         body: JSON.stringify(user),
+        headers,
     };
 
     return fetch(url, options)
