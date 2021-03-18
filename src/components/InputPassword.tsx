@@ -23,7 +23,7 @@ function InputPassword ({
         <Input
             ref={ref}
             value={value}
-            placeholder='Password'
+            placeholder='Mot de passe'
             accessoryRight={renderIcon}
             secureTextEntry={secureTextEntry}
             onChangeText={nextValue => onChanchValue(nextValue)}
