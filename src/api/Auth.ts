@@ -1,7 +1,7 @@
 import { API_URL } from '@env';
 import Store from '../../store';
 import { checkError, jsonMapper } from "./utils";
-import { actionSetTokens } from '../screens/tokens.action';
+import { actionSetToken } from '../screens/token.action';
 
 export function postLogin(email: string, password: string) {
     const url = `${API_URL}/auth/login`;
@@ -21,6 +21,6 @@ export function postLogin(email: string, password: string) {
             accessToken = '',
             accessTokenExpirationDate,
         }) => {
-            Store.dispatch(actionSetTokens(accessToken, accessTokenExpirationDate));
+            Store.dispatch(actionSetToken(accessToken, accessTokenExpirationDate));
         });
 }

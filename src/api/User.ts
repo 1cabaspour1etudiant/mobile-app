@@ -2,7 +2,7 @@ import { API_URL } from '@env';
 import { UserRegister } from '../screens/Register/types';
 import { checkError, jsonMapper } from './utils';
 import Store from '../../store';
-import { actionSetTokens } from '../screens/tokens.action';
+import { actionSetToken } from '../screens/token.action';
 
 export function getUserEmailIsAvailable(email: string): Promise<boolean> {
     const params = new URLSearchParams({ email });
@@ -33,6 +33,10 @@ export function postUser(user: UserRegister) {
         .then(checkError)
         .then(jsonMapper)
         .then(({ accessToken, accessTokenExpirationDate }) => {
-            Store.dispatch(actionSetTokens(accessToken, accessTokenExpirationDate));
+            Store.dispatch(actionSetToken(accessToken, accessTokenExpirationDate));
         });
+}
+
+export async function putUserMePicture(imageUri: string) {
+
 }

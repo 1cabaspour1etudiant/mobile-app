@@ -1,20 +1,21 @@
 import AsyncStorage from '@react-native-community/async-storage';
 
 import {
-  TOKENS_SET_TOKENS,
-} from './tokens.action';
+  TOKEN_SET_TOKEN,
+} from './token.action';
 
 
 import { PRIVATE_CLEAR } from './constant';
+import { TokenState } from './types';
 
-const initialState = {
+const initialState: TokenState = {
   accessToken: '',
   accessTokenExpirationDate: '',
 };
 
-export default (state = initialState, action: any) => {
+export default (state = initialState, action: any): TokenState => {
   switch (action.type) {
-    case TOKENS_SET_TOKENS: {
+    case TOKEN_SET_TOKEN: {
         const {
             accessToken,
             accessTokenExpirationDate,

@@ -5,12 +5,12 @@ import {
 
 import login from './src/screens/Login/reducer';
 import register from './src/screens/Register/reducer';
-import tokens from './src/screens/tokens.reducer';
+import token from './src/screens/token.reducer';
 
 const rootReducer = combineReducers({
     login,
     register,
-    tokens,
+    token,
 });
 
 export default createStore(rootReducer);
