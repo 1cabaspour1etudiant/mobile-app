@@ -21,6 +21,6 @@ export function postLogin(email: string, password: string) {
             accessToken = '',
             accessTokenExpirationDate,
         }) => {
-            Store.dispatch(actionSetToken(accessToken, accessTokenExpirationDate));
+            Store.dispatch(actionSetToken(accessToken, accessTokenExpirationDate + ''));
         });
 }

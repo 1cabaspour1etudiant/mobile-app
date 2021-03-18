@@ -33,7 +33,7 @@ export function postUser(user: UserRegister) {
         .then(checkError)
         .then(jsonMapper)
         .then(({ accessToken, accessTokenExpirationDate }) => {
-            Store.dispatch(actionSetToken(accessToken, accessTokenExpirationDate));
+            Store.dispatch(actionSetToken(accessToken, accessTokenExpirationDate + ''));
         });
 }
 
