@@ -15,6 +15,7 @@ import MemberSpaceScreen from './src/screens/Private/MemberSpace';
 import ForgotPasswordSendCodeScreen from './src/screens/ForgotPassword/ForgotPasswordSendCodeScreen';
 import EmailAndPasswordScreen from './src/screens/Register/EmailAndPassword';
 import RegisterMainInfosScreen from './src/screens/Register/RegisterMainInfos';
+import OnBoardingProfilePictureScreen from './src/screens/Register/OnBoarding/ProfilePicture';
 
 import Store from './store';
 import * as RootNavigation from './RootNavigation';
@@ -71,6 +72,11 @@ export default function App() {
                   <Stack.Screen
                     name="RegisterMainInfosScreen"
                     component={RegisterMainInfosScreen}
+                  />
+
+                  <Stack.Screen
+                    name="OnBoardingProfilePictureScreen"
+                    component={OnBoardingProfilePictureScreen}
                   />
 
                 </Stack.Navigator>

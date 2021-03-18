@@ -156,7 +156,7 @@ export default function RegisterMainInfos() {
         postUser(user)
             .then(() => {
                 hideNotification();
-                navigate('');
+                navigate('OnBoardingProfilePictureScreen');
             })
             .catch((error) => {
                 hideNotification();
