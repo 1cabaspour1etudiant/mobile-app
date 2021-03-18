@@ -1,4 +1,5 @@
 import { API_URL } from '@env';
+import { UserRegister } from '../screens/Register/types';
 import { checkError, jsonMapper } from './utils';
 
 
@@ -6,8 +7,21 @@ export function getUserEmailIsAvailable(email: string): Promise<boolean> {
     const params = new URLSearchParams({ email });
     const url = `${API_URL}/user/emailIsAvailable?${params}`;
 
-    const options = {
+    const options: RequestInit = {
         method: 'GET',
+    };
+ 
+    return fetch(url, options)
+        .then(checkError)
+        .then(jsonMapper);
+}
+
+export function postUser(user: UserRegister) {
+    const url = `${API_URL}/user`;
+
+    const options: RequestInit = {
+        method: 'POST',
+        body: JSON.stringify(user),
     };
 
     return fetch(url, options)
