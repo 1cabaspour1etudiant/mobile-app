@@ -85,9 +85,7 @@ export default function EmailAndPassword() {
                     !passwordIsValid && (
                         <>
                             <Text style={styles.text} status='danger'>Votre mot de passe doit avoir au moins:</Text>
-                            <Text style={styles.text} status='danger'>- Une majuscule</Text>
-                            <Text style={styles.text} status='danger'>- Huit characteres</Text>
-                            <Text style={styles.text} status='danger'>- Un chiffre</Text>
+                            <Text style={styles.text} status='danger'>*Une majuscule *Huit caractères *Un chiffre</Text>
                         </>
                     )
                 }
