@@ -53,7 +53,7 @@ export default function LoginScreen() {
       .finally(() => {
         hideNotification();
       });
-  }, []);
+  }, [email, password]);
 
   const toggleIscription = useCallback(() => {
     navigate('EmailAndPasswordScreen');
