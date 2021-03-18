@@ -66,7 +66,7 @@ export default function LoginScreen() {
   return (
     <Layout style={styles.container} level='1'>
       <View style={styles.titleContainer}>
-        <Text style={styles.text} category='h1'>Connectez vous</Text>
+        <Text style={styles.text} category='h1'>Connectez-vous</Text>
       </View>
 
       <View style={{ flex:2 }}>
@@ -78,12 +78,15 @@ export default function LoginScreen() {
         <Input
           style={styles.input}
           value={email}
-          placeholder='Email adress'
+          placeholder='Adresse email'
           onChangeText={toggleChangeEmail}
           autoFocus={true}
           returnKeyType='next'
           onSubmitEditing={toggleEmailSubmitEditing}
           blurOnSubmit={false}
+          keyboardType='email-address'
+          textContentType='emailAddress'
+          autoCompleteType='email'
         />
 
         <InputPassword
