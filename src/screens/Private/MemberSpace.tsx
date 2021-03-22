@@ -7,7 +7,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { SafeAreaView } from 'react-native';
 
 import { useLeaveApp } from '../hooks';
-import SearchTab from './SearchTab';
+import SearchTab from './SearchTab/SearchTab';
 import GodefatherTab from './GodefatherTab';
 import ProfileTab from './ProfileTab';
 
