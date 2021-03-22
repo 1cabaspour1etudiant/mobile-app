@@ -3,6 +3,7 @@ import { UserRegister } from '../screens/Register/types';
 import { checkError, getAccessToken, jsonMapper } from './utils';
 import Store from '../../store';
 import { actionSetToken } from '../screens/token.action';
+import { UserSearchResponse } from './types';
 
 export function getUserEmailIsAvailable(email: string): Promise<boolean> {
     const params = new URLSearchParams({ email });
@@ -62,4 +63,27 @@ export async function putUserMePicture(imageUri: string) {
 
     return fetch(url, options)
         .then(checkError);
+}
+
+export async function getUserSearch(page = 0, pageSize = 20, abortController = new AbortController()):Promise<UserSearchResponse> {
+    const accessToken = await getAccessToken();
+    
+    const params = new URLSearchParams({
+        page: page.toString(),
+        pageSize: pageSize.toString(),
+    });
+    const url = `${API_URL}/user/search?${params}`;
+    const headers = new Headers();
+    headers.append('Authorization', `Bearer ${accessToken}`);
+
+    const { signal } = abortController;
+    const options = {
+        method: 'GET',
+        headers,
+        signal,
+    };
+
+    return fetch(url, options)
+        .then(checkError)
+        .then(jsonMapper);
 }
