@@ -1,10 +1,37 @@
 import React, { useCallback, useEffect, useState } from 'react';
+import { Image } from 'react-native';
 import { Button, Icon, Layout, List, ListItem } from '@ui-kitten/components';
-import { getUserSearch } from '../../api/User';
+import { getUserProfilePicture, getUserSearch } from '../../api/User';
 import { UserSearch } from '../../api/types';
 import SpinnerList from '../../components/SpinnerList';
 
-function UserListItem({ firstname, activityArea }: UserSearch) {
+function UserListItem({ id, firstname, activityArea }: UserSearch) {
+    const [ pictureLoaded, setPictureLoaded ] = useState(false);
+    const [picture, setPicture] = useState('');
+
+    useEffect(() => {
+        if (!pictureLoaded) {
+            let mounted = true;
+            const abortController = new AbortController();
+
+            getUserProfilePicture(id, abortController)
+                .then((pictureAsBase64) => {
+                    if (mounted) {
+                        setPictureLoaded(true);
+                        setPicture(pictureAsBase64);
+                    }
+                })
+                .catch((error) => {
+                    // console.log(error);
+                });
+
+            return () => {
+                mounted = false;
+                abortController.abort();
+            };
+        }
+    }, [pictureLoaded]);
+
     const renderItemAccessoryRight = useCallback(() => {
         return (
             <Button size='tiny'>Contacte</Button>
@@ -12,10 +39,16 @@ function UserListItem({ firstname, activityArea }: UserSearch) {
     }, []);
 
     const renderItemAccessoryLeft = useCallback((props) => {
+        if (pictureLoaded) {
+            return (
+                <Image source={{ uri: picture }}/>
+            );
+        }
+
         return (
             <Icon {...props} name='person'/>
         );
-    }, []);
+    }, [pictureLoaded, picture]);
 
     return (
         <ListItem
