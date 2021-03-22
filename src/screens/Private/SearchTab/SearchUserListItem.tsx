@@ -33,7 +33,7 @@ export default function SearchUserListItem({ id, firstname, activityArea }: User
 
     const renderItemAccessoryRight = useCallback(() => {
         return (
-            <Button size='tiny'>Contacte</Button>
+            <Button size='tiny'>Contacter</Button>
         );
     }, []);
 
@@ -51,6 +51,7 @@ export default function SearchUserListItem({ id, firstname, activityArea }: User
 
     return (
         <ListItem
+            disabled
             title={firstname}
             description={activityArea}
             accessoryLeft={renderItemAccessoryLeft}
