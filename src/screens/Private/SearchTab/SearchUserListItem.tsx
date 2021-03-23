@@ -52,7 +52,14 @@ export default function SearchUserListItem({ id, firstname, distance }: UserSear
         );
     }, [pictureLoaded, picture]);
 
-    const description = useMemo(() => `${parseInt(''+distance, 10)} mètres`, [distance]);
+    const description = useMemo(() => {
+        const distanceAsInt = parseInt('' + distance, 10);
+        if (distanceAsInt < 1000) {
+            return 'Moin d\'un kilomètre';
+        }
+
+        return `${distanceAsInt / 1000} KM`;
+    }, [distance]);
 
     return (
         <ListItem
