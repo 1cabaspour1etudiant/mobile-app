@@ -1,12 +1,12 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { Image } from 'react-native';
+import { Image, StyleSheet } from 'react-native';
 import { Button, Icon, ListItem } from '@ui-kitten/components';
 import { getUserProfilePicture} from '../../../api/User';
 import { UserSearch } from '../../../api/types';
 
 export default function SearchUserListItem({ id, firstname, distance }: UserSearch) {
     const [ pictureLoaded, setPictureLoaded ] = useState(false);
-    const [picture, setPicture] = useState('');
+    const [ picture, setPicture ] = useState('');
 
     useEffect(() => {
         if (!pictureLoaded) {
@@ -40,7 +40,10 @@ export default function SearchUserListItem({ id, firstname, distance }: UserSear
     const renderItemAccessoryLeft = useCallback((props) => {
         if (pictureLoaded) {
             return (
-                <Image source={{ uri: picture }}/>
+                <Image
+                    style={styles.profilePicture}
+                    source={{ uri: `data:;base64, ${picture}` }}
+                />
             );
         }
 
@@ -61,3 +64,11 @@ export default function SearchUserListItem({ id, firstname, distance }: UserSear
         />
     );
 }
+
+const styles = StyleSheet.create({
+    profilePicture: {
+        width: 30,
+        height: 30,
+        marginLeft: 10,
+    },
+});
