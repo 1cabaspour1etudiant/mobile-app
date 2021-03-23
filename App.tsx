@@ -37,7 +37,7 @@ export default function App() {
   return (
     <>
       <IconRegistry icons={EvaIconsPack} />
-      <ApplicationProvider {...eva} theme={{ ...eva.dark, ...theme }}>
+      <ApplicationProvider {...eva} theme={{ ...eva.light, ...theme }}>
         <NofificationContextProvider>
         {
           loaded && (

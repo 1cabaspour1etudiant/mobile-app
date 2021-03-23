@@ -9,6 +9,7 @@ import { View, StyleSheet, StatusBar } from 'react-native';
 
 import { Spinner } from '@ui-kitten/components';
 import Modal from 'react-native-modal';
+import {default as theme} from '../theme.json';
 
 const NotificationContext = createContext({
     showNotification: () => {},
@@ -46,7 +47,7 @@ export const NofificationContextProvider = (props: any) => {
     return (
         <NotificationContext.Provider value={value}>
             <StatusBar
-                backgroundColor="#B72F10"
+                backgroundColor={theme['color-primary-700']}
                 barStyle="light-content"
             />
             {props.children}
