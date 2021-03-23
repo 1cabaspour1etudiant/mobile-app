@@ -1,10 +1,10 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { Image } from 'react-native';
 import { Button, Icon, ListItem } from '@ui-kitten/components';
 import { getUserProfilePicture} from '../../../api/User';
 import { UserSearch } from '../../../api/types';
 
-export default function SearchUserListItem({ id, firstname, activityArea }: UserSearch) {
+export default function SearchUserListItem({ id, firstname, distance }: UserSearch) {
     const [ pictureLoaded, setPictureLoaded ] = useState(false);
     const [picture, setPicture] = useState('');
 
@@ -33,7 +33,7 @@ export default function SearchUserListItem({ id, firstname, activityArea }: User
 
     const renderItemAccessoryRight = useCallback(() => {
         return (
-            <Button size='tiny'>Contacter</Button>
+            <Button size='tiny'>contacter</Button>
         );
     }, []);
 
@@ -49,11 +49,13 @@ export default function SearchUserListItem({ id, firstname, activityArea }: User
         );
     }, [pictureLoaded, picture]);
 
+    const description = useMemo(() => `${parseInt(''+distance, 10)} mètres`, [distance]);
+
     return (
         <ListItem
             disabled
             title={firstname}
-            description={activityArea}
+            description={description}
             accessoryLeft={renderItemAccessoryLeft}
             accessoryRight={renderItemAccessoryRight}
         />

@@ -43,6 +43,7 @@ export default function SearchTab() {
                 id = {item.id}
                 firstname={item.firstname}
                 activityArea = {item.activityArea}
+                distance={item.distance}
             />
         )
     }, []);
