@@ -3,7 +3,7 @@ import {
     BottomNavigation,
     BottomNavigationTab,
 } from '@ui-kitten/components';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { BottomTabBarOptions, BottomTabBarProps, createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { SafeAreaView } from 'react-native';
 
 import { useLeaveApp } from '../hooks';
@@ -13,13 +13,15 @@ import ProfileTab from './ProfileTab';
 
 const { Navigator, Screen } = createBottomTabNavigator();
 
-function BottomTabBar(props: any) {
-    const { navigation, state} = props;
+function BottomTabBar({ navigation, state}: BottomTabBarProps<BottomTabBarOptions>) {
+    const onSelect = React.useCallback(
+        (index) => navigation.navigate(state.routeNames[index]),
+    []);
 
     return (
         <BottomNavigation
             selectedIndex={state.index}
-            onSelect={index => navigation.navigate(state.routeNames[index])}
+            onSelect={onSelect}
         >
             <BottomNavigationTab title='Recherche' />
             <BottomNavigationTab title='Parrain'/>
@@ -31,7 +33,7 @@ function BottomTabBar(props: any) {
 export default function MemberSpace() {
     useLeaveApp();
     return (
-        <SafeAreaView style={{ flex: 1, paddingTop: 25 }}>
+        <SafeAreaView style={{ flex: 1 }}>
             <Navigator tabBar={props => <BottomTabBar {...props} />}>
             <Screen name='Recherche' component={SearchTab}/>
             <Screen name='Parrain' component={GodefatherTab}/>
