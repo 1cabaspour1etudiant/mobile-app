@@ -63,8 +63,14 @@ export default function SearchTab() {
                 data={users}
                 renderItem={renderItem}
                 keyExtractor={(item:UserSearch) => `${item.id}`}
-                onEndReachedThreshold={0.5}
+                onEndReachedThreshold={0.25}
                 onEndReached={onEndReached}
+
+                removeClippedSubviews={true} // Unmount components when outside of window 
+                initialNumToRender={2} // Reduce initial render amount
+                maxToRenderPerBatch={1} // Reduce number in each render batch
+                updateCellsBatchingPeriod={100} // Increase time between renders
+                windowSize={7} // Reduce the window size
             />
         </Layout>
     );
