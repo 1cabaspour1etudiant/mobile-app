@@ -45,7 +45,7 @@ export default function SearchTab() {
                 activityArea = {item.activityArea}
                 distance={item.distance}
             />
-        )
+        );
     }, []);
 
     const onEndReached = useCallback(() => {
@@ -62,7 +62,7 @@ export default function SearchTab() {
             <List
                 data={users}
                 renderItem={renderItem}
-                keyExtractor={(item:any) => item.id}
+                keyExtractor={(item:UserSearch) => `${item.id}`}
                 onEndReachedThreshold={0.5}
                 onEndReached={onEndReached}
             />
