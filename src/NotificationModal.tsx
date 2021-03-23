@@ -5,7 +5,7 @@ import React, {
     useCallback,
 } from 'react';
 
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, StatusBar } from 'react-native';
 
 import { Spinner } from '@ui-kitten/components';
 import Modal from 'react-native-modal';
@@ -45,6 +45,10 @@ export const NofificationContextProvider = (props: any) => {
 
     return (
         <NotificationContext.Provider value={value}>
+            <StatusBar
+                backgroundColor="#B72F10"
+                barStyle="light-content"
+            />
             {props.children}
             <Modal
                 isVisible={notificationVisible}
