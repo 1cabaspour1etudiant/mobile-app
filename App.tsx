@@ -21,6 +21,7 @@ import Store from './store';
 import * as RootNavigation from './RootNavigation';
 import { EvaIconsPack } from '@ui-kitten/eva-icons';
 import { NofificationContextProvider } from './src/NotificationModal';
+import { default as theme } from './theme.json';
 
 const Stack = createStackNavigator();
 
@@ -36,7 +37,7 @@ export default function App() {
   return (
     <>
       <IconRegistry icons={EvaIconsPack} />
-      <ApplicationProvider {...eva} theme={eva.light}>
+      <ApplicationProvider {...eva} theme={{ ...eva.dark, ...theme }}>
         <NofificationContextProvider>
         {
           loaded && (
