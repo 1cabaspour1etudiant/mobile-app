@@ -1,3 +1,8 @@
+export enum UserStatus {
+    ADMIN = 'admin',
+    GODSON = 'godson',
+    GODFATHER = 'godfather'
+};
 
 export type Address = {
     address: string;
@@ -10,4 +15,6 @@ export type PrivateUserInfos = {
     lastname: string;
     tel: string;
     address: Address;
+    status: UserStatus;
+    validated: boolean;
 };
