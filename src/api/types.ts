@@ -17,6 +17,7 @@ export type Sponsorship = {
     godfatherId: number;
     godsonId: number;
     recipientId: number;
+    emitterId: number;
     validated: boolean;
     date: Date;
 };
