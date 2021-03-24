@@ -29,3 +29,19 @@ export async function getSponsorshipRequests(
         .then(checkError)
         .then(jsonMapper);
 }
+
+export async function putSponsorshipAccept(sponsorshipId: number) {
+    const accessToken = await getAccessToken();
+    const url = `${API_URL}/sponsorship/accept`;
+    const headers = new Headers();
+    headers.append('Authorization', `Bearer ${accessToken}`);
+
+    const options = {
+        method: 'GET',
+        headers,
+        body: JSON.stringify({ sponsorshipId }),
+    };
+
+    return fetch(url, options)
+        .then(checkError);
+}
