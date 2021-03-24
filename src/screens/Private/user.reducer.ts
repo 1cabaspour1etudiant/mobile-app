@@ -1,18 +1,23 @@
+import { PrivateUserInfos, UserStatus } from './types';
 import {
     PRIVATE_USER_SET_INFOS
 } from './user.action';
 
-const initialState = {
-    infos: {
-        firstname: '',
-        lastname: '',
-        tel: '',
-        address: {
-            address: '',
-            city: '',
-            zipCode: '',
-        },
+const initialInfos:PrivateUserInfos = {
+    firstname: '',
+    lastname: '',
+    tel: '',
+    address: {
+        address: '',
+        city: '',
+        zipCode: '',
     },
+    status: UserStatus.GODSON,
+    validated: false,
+}
+
+const initialState = {
+    infos: initialInfos,
 };
 
 export default function(state = initialState, action: any) {
