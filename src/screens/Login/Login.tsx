@@ -9,8 +9,8 @@ import { postLogin } from '../../api/Auth';
 import { useNavigation } from '@react-navigation/core';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { useNotifiCationModal } from '../../NotificationModal';
-import { getUserMeInfos } from '../../api/User';
-import { actionPrivateUserSetInfos } from '../Private/user.action';
+import { getUserMeInfos, getUserMeProfilePicture } from '../../api/User';
+import { actionPrivateUserSetInfos, actionPrivateUserSetProfilePicture } from '../Private/user.action';
 
 const selector = ({ login:{ email = '', password = '' } }) => ({ email, password });
 
@@ -42,8 +42,17 @@ export default function LoginScreen() {
     showNotification();
     postLogin(email, password)
       .then(async () => {
-        const userMeInfos = await getUserMeInfos();
+        const awaitingUserMeInfos = getUserMeInfos();
+        const awaitingUserMeProfilePicture = getUserMeProfilePicture()
+          .catch((error) => {
+            console.log(error);
+            return '';
+          });
+
+        const [userMeInfos, userMeProfilePicture] = await Promise.all([awaitingUserMeInfos, awaitingUserMeProfilePicture]);
+
         dispatch(actionPrivateUserSetInfos(userMeInfos));
+        dispatch(actionPrivateUserSetProfilePicture(userMeProfilePicture));
       })
       .then(() => {
         if (connectionFailed) {
