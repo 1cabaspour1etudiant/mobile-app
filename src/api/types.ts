@@ -24,6 +24,6 @@ export type Sponsorship = {
 export type AwaitingSponsorshipResponse = {
     page: number;
     lastPage: boolean;
-    items: UserSearch[];
+    items: Sponsorship[];
     pageSize: number;
 }
