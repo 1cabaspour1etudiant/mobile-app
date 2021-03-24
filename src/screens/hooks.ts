@@ -47,7 +47,7 @@ export function useLeaveApp() {
   }
 }
 
-export function useDistance(distance: number) {
+export function useDistance(distance: number = 0) {
   const distanceAsKilometer = useMemo(() => {
     const distanceAsInt = parseInt('' + distance, 10);
     if (distanceAsInt < 1000) {
