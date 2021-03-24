@@ -91,7 +91,7 @@ export async function getUserSearch(page = 0, pageSize = 20, abortController = n
 
 export async function getUserProfilePicture(userId: number, abortController = new AbortController()) {
     const accessToken = await getAccessToken();
-    const params = new URLSearchParams({ id: userId.toString() });
+    const params = new URLSearchParams({ userId: userId.toString() });
     const url = `${API_URL}/user/profilePicture?${params}`;
     const headers = new Headers();
     headers.append('Authorization', `Bearer ${accessToken}`);
