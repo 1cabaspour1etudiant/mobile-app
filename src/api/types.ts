@@ -28,3 +28,12 @@ export type AwaitingSponsorshipResponse = {
     items: Sponsorship[];
     pageSize: number;
 }
+
+export type GetUserInfos = {
+    distance: number;
+    id: number;
+    firstname: string;
+    tel: string;
+    status: string;
+    activityArea: string;
+};
