@@ -3,7 +3,7 @@ import { UserRegister } from '../screens/Register/types';
 import { checkError, getAccessToken, jsonMapper } from './utils';
 import Store from '../../store';
 import { actionSetToken } from '../screens/token.action';
-import { Sponsorship, UserSearchResponse } from './types';
+import { AwaitingSponsorshipResponse, UserSearchResponse } from './types';
 import { PrivateUserInfos } from '../screens/Private/types';
 
 export function getUserEmailIsAvailable(email: string): Promise<boolean> {
@@ -144,7 +144,7 @@ export async function getSponsorshipRequests(
     page = 0,
     pageSize = 20,
     abortController = new AbortController(),
-): Promise<Sponsorship> {
+): Promise<AwaitingSponsorshipResponse> {
     const accessToken = await getAccessToken();
     const params = new URLSearchParams({
         page: page.toString(),
