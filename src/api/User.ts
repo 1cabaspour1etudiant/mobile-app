@@ -3,7 +3,7 @@ import { UserRegister } from '../screens/Register/types';
 import { checkError, getAccessToken, jsonMapper } from './utils';
 import Store from '../../store';
 import { actionSetToken } from '../screens/token.action';
-import { AwaitingSponsorshipResponse, GetUserInfos, UserSearchResponse } from './types';
+import { GetUserInfos, UserSearchResponse } from './types';
 import { PrivateUserInfos } from '../screens/Private/types';
 
 export function getUserEmailIsAvailable(email: string): Promise<boolean> {
@@ -138,34 +138,6 @@ export async function getUserMeProfilePicture():Promise<string> {
     return fetch(url, options)
         .then(checkError)
         .then((res) => res.text());
-}
-
-export async function getSponsorshipRequests(
-    page = 0,
-    pageSize = 20,
-    type = 'received',
-    abortController = new AbortController(),
-): Promise<AwaitingSponsorshipResponse> {
-    const accessToken = await getAccessToken();
-    const params = new URLSearchParams({
-        page: page.toString(),
-        pageSize: pageSize.toString(),
-        type,
-    });
-    const url = `${API_URL}/sponsorship/requests?${params}`;
-    const headers = new Headers();
-    headers.append('Authorization', `Bearer ${accessToken}`);
-
-    const { signal } = abortController;
-    const options = {
-        method: 'GET',
-        headers,
-        signal,
-    };
-
-    return fetch(url, options)
-        .then(checkError)
-        .then(jsonMapper);
 }
 
 export async function getUserInfos(userId: number, abortController = new AbortController()):Promise<GetUserInfos> {
