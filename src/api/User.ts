@@ -126,7 +126,7 @@ export async function getUserMeInfos(): Promise<PrivateUserInfos> {
 
 export async function getUserMeProfilePicture():Promise<string> {
     const accessToken = await getAccessToken();
-    const url = `${API_URL}/user/profilePicture`;
+    const url = `${API_URL}/user/me/profilePicture`;
     const headers = new Headers();
     headers.append('Authorization', `Bearer ${accessToken}`);
 
