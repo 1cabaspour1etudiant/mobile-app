@@ -3,6 +3,7 @@ import { Image, StyleSheet } from 'react-native';
 import { Button, Icon, ListItem } from '@ui-kitten/components';
 import { getUserProfilePicture} from '../../../api/User';
 import { UserSearch } from '../../../api/types';
+import { useDistance } from '../../hooks';
 
 export default function SearchUserListItem({ id, firstname, distance }: UserSearch) {
     const [ pictureLoaded, setPictureLoaded ] = useState(false);
@@ -52,14 +53,7 @@ export default function SearchUserListItem({ id, firstname, distance }: UserSear
         );
     }, [pictureLoaded, picture]);
 
-    const description = useMemo(() => {
-        const distanceAsInt = parseInt('' + distance, 10);
-        if (distanceAsInt < 1000) {
-            return 'Moin d\'un kilomètre';
-        }
-
-        return `${distanceAsInt / 1000} KM`;
-    }, [distance]);
+    const description = useDistance(distance);
 
     return (
         <ListItem
