@@ -106,3 +106,19 @@ export async function getUserProfilePicture(userId: number, abortController = ne
         .then(checkError)
         .then((res) => res.text());
 }
+
+export async function getUserMeInfos() {
+    const accessToken = await getAccessToken();
+    const url = `${API_URL}/user/me`;
+    const headers = new Headers();
+    headers.append('Authorization', `Bearer ${accessToken}`);
+
+    const options = {
+        method: 'GET',
+        headers
+    };
+
+    return fetch(url, options)
+        .then(checkError)
+        .then(jsonMapper);
+}
