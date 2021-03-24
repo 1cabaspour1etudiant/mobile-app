@@ -123,3 +123,19 @@ export async function getUserMeInfos(): Promise<PrivateUserInfos> {
         .then(checkError)
         .then(jsonMapper);
 }
+
+export async function getUserMeProfilePicture():Promise<string> {
+    const accessToken = await getAccessToken();
+    const url = `${API_URL}/user/profilePicture`;
+    const headers = new Headers();
+    headers.append('Authorization', `Bearer ${accessToken}`);
+
+    const options = {
+        method: 'GET',
+        headers
+    };
+
+    return fetch(url, options)
+        .then(checkError)
+        .then((res) => res.text());
+}
