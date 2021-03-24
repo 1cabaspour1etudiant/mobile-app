@@ -10,6 +10,7 @@ import { useLeaveApp } from '../hooks';
 import SearchTab from './SearchTab/SearchTab';
 import GodefatherTab from './GodfatherTab/GodefatherTab';
 import ProfileTab from './ProfileTab/ProfileTab';
+import RequestsTab from './RequestsTab/RequestsTab';
 
 const { Navigator, Screen } = createBottomTabNavigator();
 
@@ -25,6 +26,7 @@ function BottomTabBar({ navigation, state}: BottomTabBarProps<BottomTabBarOption
         >
             <BottomNavigationTab title='Recherche' />
             <BottomNavigationTab title='Parrain'/>
+            <BottomNavigationTab title='Demandes'/>
             <BottomNavigationTab title='Profil'/>
         </BottomNavigation>
     );
@@ -37,6 +39,7 @@ export default function MemberSpace() {
             <Navigator tabBar={props => <BottomTabBar {...props} />}>
             <Screen name='Recherche' component={SearchTab}/>
             <Screen name='Parrain' component={GodefatherTab}/>
+            <Screen name='Demandes' component={RequestsTab}/>
             <Screen name='Profil' component={ProfileTab}/>
             </Navigator>
         </SafeAreaView>
