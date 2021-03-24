@@ -143,12 +143,14 @@ export async function getUserMeProfilePicture():Promise<string> {
 export async function getSponsorshipRequests(
     page = 0,
     pageSize = 20,
+    type = 'received',
     abortController = new AbortController(),
 ): Promise<AwaitingSponsorshipResponse> {
     const accessToken = await getAccessToken();
     const params = new URLSearchParams({
         page: page.toString(),
         pageSize: pageSize.toString(),
+        type,
     });
     const url = `${API_URL}/sponsorship/requests?${params}`;
     const headers = new Headers();
