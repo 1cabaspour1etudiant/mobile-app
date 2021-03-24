@@ -3,13 +3,7 @@ import { Image, StyleSheet, View } from 'react-native';
 import { Button, Icon, ListItem } from '@ui-kitten/components';
 import { getUserInfos, getUserProfilePicture} from '../../../api/User';
 import { GetUserInfos, Sponsorship } from '../../../api/types';
-import { PrivateUserInfos } from '../types';
-import { useSelector } from 'react-redux';
 import { useDistance } from '../../hooks';
-
-const selector = ({
-    user: { status }}: { user: PrivateUserInfos
-}) => ({ currentUserStatus: status });
 
 export default function ReceivedRequestSponsorshipListItem({ sponsorshipId, godfatherId, godsonId, emitterId }: Sponsorship) {
     const [emitterInfos, setEmitterInfos] = useState<GetUserInfos>();
@@ -17,8 +11,6 @@ export default function ReceivedRequestSponsorshipListItem({ sponsorshipId, godf
 
     const [ emitterPictureLoaded, setEmitterPictureLoaded ] = useState(false);
     const [ emitterPicture, setEmitterPicture ] = useState('');
-
-    const { currentUserStatus } = useSelector(selector);
 
     useEffect(() => {
         if (!emitterPictureLoaded) {

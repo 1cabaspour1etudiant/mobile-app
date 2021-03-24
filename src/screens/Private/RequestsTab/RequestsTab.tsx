@@ -1,15 +1,23 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { Layout, List } from '@ui-kitten/components';
+import { Layout, List, Text } from '@ui-kitten/components';
+import { useSelector } from 'react-redux';
+
 import { Sponsorship } from '../../../api/types';
 import { getSponsorshipRequests } from '../../../api/Sponsorship';
 import SpinnerList from '../../../components/SpinnerList';
 import ReceivedRequestSponsorshipListItem from './ReceivedRequestSponsorshipListItem';
+
+const selector = ({
+    user: { infos: { status } }
+}: any) => ({ status });
 
 export default function RequestsTab() {
     const [loaded, setLoaded] = useState(false);
     const [sponsorships, setSponsorships] = useState<Sponsorship[]>([]);
     const [page, setPage] = useState(-1);
     const [lastPage, setLastPage] = useState(false);
+
+    const { status }: { status:string } = useSelector(selector);
 
     useEffect(() => {
         if (!loaded) {
@@ -62,6 +70,7 @@ export default function RequestsTab() {
             {
                 !loaded && (<SpinnerList />)
             }
+            <Text category='h6'>Vos { status === 'godfather' ? 'demandes' : 'propositions' } de sponsorisation</Text>
             <List
                 data={sponsorships}
                 renderItem={renderItem}
