@@ -9,7 +9,7 @@ import { SafeAreaView } from 'react-native';
 import { useLeaveApp } from '../hooks';
 import SearchTab from './SearchTab/SearchTab';
 import GodefatherTab from './GodfatherTab/GodefatherTab';
-import ProfileTab from './ProfileTab';
+import ProfileTab from './ProfileTab/ProfileTab';
 
 const { Navigator, Screen } = createBottomTabNavigator();
 
