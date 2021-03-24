@@ -66,14 +66,33 @@ export default function ReceivedRequestSponsorshipListItem({ sponsorshipId, godf
         }
     }, [emitterInfosLoaded]);
 
+    const toggleAcceptButtonClick = useCallback(() => {
+
+    }, [sponsorshipId]);
+
+    const toggleRefuseButtonClick = useCallback(() => {
+
+    }, [sponsorshipId]);
+
     const renderItemAccessoryRight = useCallback(() => {
         return (
             <View style={styles.buttonsContainer}>
-                <Button size='tiny'>Accepter</Button>
-                <Button style={styles.buttonRight} size='tiny'>Refuser</Button>
+                <Button
+                    size='tiny'
+                    onPress={toggleAcceptButtonClick}
+                >
+                    Accepter
+                </Button>
+                <Button
+                    style={styles.buttonRight}
+                    size='tiny'
+                    onPress={toggleRefuseButtonClick}
+                >
+                    Refuser
+                </Button>
             </View>
         );
-    }, []);
+    }, [toggleAcceptButtonClick, toggleRefuseButtonClick]);
 
     const renderItemAccessoryLeft = useCallback((props) => {
         if (emitterPictureLoaded) {
