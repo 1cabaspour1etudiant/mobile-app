@@ -47,7 +47,7 @@ export default function RequestsTab() {
             let mounted = true;
             (async () => {
                 const sponsorships = [];
-                for (let i = 0; i < page; i++) {
+                for (let i = 0; i <= page; i++) {
                     const { items } = await getSponsorshipRequests(i, 20, 'received');
                     sponsorships.push(...items);
                 }
