@@ -46,3 +46,20 @@ export async function putSponsorshipAccept(sponsorshipId: number) {
     return fetch(url, options)
         .then(checkError);
 }
+
+export async function deleteSponsorship(sponsorshipId: number) {
+    const accessToken = await getAccessToken();
+    const url = `${API_URL}/sponsorship`;
+    const headers = new Headers();
+    headers.append('Authorization', `Bearer ${accessToken}`);
+    headers.append('Content-Type', 'application/json');
+
+    const options = {
+        method: 'DELETE',
+        headers,
+        body: JSON.stringify({ sponsorshipId }),
+    };
+
+    return fetch(url, options)
+        .then(checkError);
+}
