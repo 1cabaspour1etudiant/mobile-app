@@ -3,7 +3,7 @@ import { UserRegister } from '../screens/Register/types';
 import { checkError, getAccessToken, jsonMapper } from './utils';
 import Store from '../../store';
 import { actionSetToken } from '../screens/token.action';
-import { GetUserInfos, UserSearchResponse } from './types';
+import { GetUserInfos, GodfatherInfos, UserSearchResponse } from './types';
 import { PrivateUserInfos } from '../screens/Private/types';
 
 export function getUserEmailIsAvailable(email: string): Promise<boolean> {
@@ -156,5 +156,23 @@ export async function getUserInfos(userId: number, abortController = new AbortCo
 
     return fetch(url, options)
         .then(checkError)
-        .then(jsonMapper);    
+        .then(jsonMapper);
+}
+
+export async function getSponsorshipGodsonGodfather(abortController = new AbortController()):Promise<GodfatherInfos> {
+    const accessToken = await getAccessToken();
+    const url = `${API_URL}/sponsorship/godfather`;
+    const headers = new Headers();
+    headers.append('Authorization', `Bearer ${accessToken}`);
+
+    const { signal } = abortController;
+    const options = {
+        method: 'GET',
+        headers,
+        signal,
+    };
+
+    return fetch(url, options)
+        .then(checkError)
+        .then(jsonMapper);
 }
