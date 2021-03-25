@@ -4,7 +4,7 @@ import { Button, Icon, ListItem } from '@ui-kitten/components';
 import { getUserInfos, getUserProfilePicture} from '../../../api/User';
 import { GetUserInfos, Sponsorship } from '../../../api/types';
 import { useDistance } from '../../hooks';
-import { putSponsorshipAccept } from '../../../api/Sponsorship';
+import { putSponsorshipAccept, deleteSponsorship } from '../../../api/Sponsorship';
 import { useNotifiCationModal } from '../../../NotificationModal';
 
 export default function ReceivedRequestSponsorshipListItem({ sponsorshipId, godfatherId, godsonId, emitterId }: Sponsorship) {
@@ -74,7 +74,14 @@ export default function ReceivedRequestSponsorshipListItem({ sponsorshipId, godf
     }, [sponsorshipId]);
 
     const toggleRefuseButtonClick = useCallback(() => {
-
+        showNotification();
+        deleteSponsorship(sponsorshipId)
+            .catch((error) => {
+                console.log(error);
+            })
+            .finally(() => {
+                hideNotification();
+            });
     }, [sponsorshipId]);
 
     const renderItemAccessoryRight = useCallback(() => {
