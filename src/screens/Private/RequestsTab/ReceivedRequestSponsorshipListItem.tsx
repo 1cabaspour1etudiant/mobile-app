@@ -7,7 +7,11 @@ import { useDistance } from '../../hooks';
 import { putSponsorshipAccept, deleteSponsorship } from '../../../api/Sponsorship';
 import { useNotifiCationModal } from '../../../NotificationModal';
 
-export default function ReceivedRequestSponsorshipListItem({ sponsorshipId, godfatherId, godsonId, emitterId }: Sponsorship) {
+interface ReceivedRequestSponsorshipListItemProps extends Sponsorship {
+    triggerRefreshing:() => void
+}
+
+export default function ReceivedRequestSponsorshipListItem({ sponsorshipId, godfatherId, godsonId, emitterId, triggerRefreshing }: ReceivedRequestSponsorshipListItemProps) {
     const [emitterInfos, setEmitterInfos] = useState<GetUserInfos>();
     const [emitterInfosLoaded, setEmitterInfosLoaded] = useState(false);
 
@@ -65,24 +69,30 @@ export default function ReceivedRequestSponsorshipListItem({ sponsorshipId, godf
     const toggleAcceptButtonClick = useCallback(() => {
         showNotification();
         putSponsorshipAccept(sponsorshipId)
+            .then(() => {
+                triggerRefreshing();
+            })
             .catch((error) => {
                 console.log(error);
             })
             .finally(() => {
                 hideNotification();
             });
-    }, [sponsorshipId]);
+    }, [sponsorshipId, triggerRefreshing]);
 
     const toggleRefuseButtonClick = useCallback(() => {
         showNotification();
         deleteSponsorship(sponsorshipId)
+            .then(() => {
+                triggerRefreshing();
+            })
             .catch((error) => {
                 console.log(error);
             })
             .finally(() => {
                 hideNotification();
             });
-    }, [sponsorshipId]);
+    }, [sponsorshipId, triggerRefreshing]);
 
     const renderItemAccessoryRight = useCallback(() => {
         return (

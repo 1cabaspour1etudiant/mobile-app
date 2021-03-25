@@ -71,6 +71,12 @@ export default function RequestsTab() {
         }
     }, [refreshing]);
 
+    const triggerRefreshing = useCallback(() => {
+        if (!refreshing) {
+            setRefreshing(true);
+        }
+    }, [refreshing]);
+
     const renderItem = useCallback(({ item }: { item: Sponsorship }) => {
         return (
             <ReceivedRequestSponsorshipListItem
@@ -82,9 +88,10 @@ export default function RequestsTab() {
                 godfatherId={item.godfatherId}
                 sponsorshipId={item.sponsorshipId}
                 validated={item.validated}
+                triggerRefreshing={triggerRefreshing}
             />
         );
-    }, []);
+    }, [triggerRefreshing]);
 
     const onEndReached = useCallback(() => {
         if (!lastPage) {
