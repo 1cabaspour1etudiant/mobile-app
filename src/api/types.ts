@@ -48,3 +48,20 @@ export type GodfatherInfos = {
     tel: string;
     address: string;
 };
+
+export type GodsonsInfos = {
+    userId: number;
+    sponsorshipId: number;
+    sponsorshipDate: Date;
+    firstname: string;
+    lastname: string;
+    tel: string;
+    address: string;
+};
+
+export type GetsonsResponse = {
+    page: number;
+    lastPage: boolean;
+    items: GodsonsInfos[];
+    pageSize: number;
+}
