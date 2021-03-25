@@ -38,3 +38,13 @@ export type GetUserInfos = {
     status: string;
     activityArea: string;
 };
+
+export type GodfatherInfos = {
+    userId: number;
+    sponsorshipId: number;
+    sponsorshipDate: Date;
+    firstname: string;
+    lastname: string;
+    tel: string;
+    address: string;
+};
