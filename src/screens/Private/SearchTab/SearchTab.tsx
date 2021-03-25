@@ -44,6 +44,7 @@ export default function SearchTab() {
                 firstname={item.firstname}
                 activityArea = {item.activityArea}
                 distance={item.distance}
+                contacted={item.contacted}
             />
         );
     }, []);

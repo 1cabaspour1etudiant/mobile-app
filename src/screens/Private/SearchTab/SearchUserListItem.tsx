@@ -10,7 +10,7 @@ import { useNotifiCationModal } from '../../../NotificationModal';
 
 const selector = ({ user: { infos: { status, id } } }: any) => ({ status, id });
 
-export default function SearchUserListItem({ id, firstname, distance }: UserSearch) {
+export default function SearchUserListItem({ id, firstname, distance, contacted }: UserSearch) {
     const [ pictureLoaded, setPictureLoaded ] = useState(false);
     const [contactRequestSent, setContactRequestSent] = useState(false);
     const [ picture, setPicture ] = useState('');
@@ -67,7 +67,7 @@ export default function SearchUserListItem({ id, firstname, distance }: UserSear
     }, [currentUserId, status, id, showNotification, hideNotification]);
 
     const renderItemAccessoryRight = useCallback((props) => {
-        if (contactRequestSent) {
+        if (contactRequestSent || contacted) {
             return (
                 <Icon {...props} name='checkmark-outline' />
             );
@@ -81,7 +81,7 @@ export default function SearchUserListItem({ id, firstname, distance }: UserSear
                 contacter
             </Button>
         );
-    }, [toggleSendContactRequest, contactRequestSent]);
+    }, [toggleSendContactRequest, contactRequestSent, contacted]);
 
     const renderItemAccessoryLeft = useCallback((props) => {
         if (pictureLoaded) {

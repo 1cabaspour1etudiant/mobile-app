@@ -3,6 +3,7 @@ export type UserSearch = {
     firstname: string;
     activityArea: string;
     distance: number;
+    contacted: boolean;
 };
 
 export type UserSearchResponse = {
