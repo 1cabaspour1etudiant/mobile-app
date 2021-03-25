@@ -35,9 +35,10 @@ export async function putSponsorshipAccept(sponsorshipId: number) {
     const url = `${API_URL}/sponsorship/accept`;
     const headers = new Headers();
     headers.append('Authorization', `Bearer ${accessToken}`);
+    headers.append('Content-Type', 'application/json');
 
     const options = {
-        method: 'GET',
+        method: 'PUT',
         headers,
         body: JSON.stringify({ sponsorshipId }),
     };
