@@ -3,7 +3,12 @@ import { Image, StyleSheet } from 'react-native';
 import { Button, Icon, ListItem } from '@ui-kitten/components';
 import { getUserProfilePicture} from '../../../api/User';
 import { UserSearch } from '../../../api/types';
-import { useDistance } from '../../hooks';
+import { useDistance, useUserStatus } from '../../hooks';
+import { useSelector } from 'react-redux';
+import { postSponsorship } from '../../../api/Sponsorship';
+import { useNotifiCationModal } from '../../../NotificationModal';
+
+const selector = ({ user: { infos: { status, id } } }: any) => ({ status, id });
 
 export default function SearchUserListItem({ id, firstname, distance }: UserSearch) {
     const [ pictureLoaded, setPictureLoaded ] = useState(false);
@@ -32,11 +37,41 @@ export default function SearchUserListItem({ id, firstname, distance }: UserSear
         }
     }, [pictureLoaded]);
 
+    const { status, id: currentUserId } = useSelector(selector);
+    const { showNotification, hideNotification } = useNotifiCationModal();
+
+    const toggleSendContactRequest = useCallback(() => {
+        let godfatherId;
+        let godsonId;
+        
+        if (status === 'godfather') {
+            godfatherId = currentUserId;
+            godsonId = id;
+        } else {
+            godfatherId = id;
+            godsonId = currentUserId;
+        }
+
+        showNotification();
+        postSponsorship(godfatherId, godsonId)
+            .catch((error) => {
+                console.log(error);
+            })
+            .finally(() => {
+                hideNotification();
+            });
+    }, [currentUserId, status, id, showNotification, hideNotification]);
+
     const renderItemAccessoryRight = useCallback(() => {
         return (
-            <Button size='tiny'>contacter</Button>
+            <Button
+                size='tiny'
+                onPress={toggleSendContactRequest}
+            >
+                contacter
+            </Button>
         );
-    }, []);
+    }, [toggleSendContactRequest]);
 
     const renderItemAccessoryLeft = useCallback((props) => {
         if (pictureLoaded) {
