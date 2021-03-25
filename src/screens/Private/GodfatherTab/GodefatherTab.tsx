@@ -1,16 +1,19 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { Text, StyleSheet, View, Image, TouchableOpacity, Linking } from 'react-native';
-import { Layout, Icon, Button } from '@ui-kitten/components';
+import { StyleSheet, View, Image, TouchableOpacity, Linking, Alert } from 'react-native';
+import { Layout, Icon, Button, Text } from '@ui-kitten/components';
 import { getSponsorshipGodsonGodfather, getUserProfilePicture } from '../../../api/User';
 import { GodfatherInfos } from '../../../api/types';
 import {default as theme} from '../../../../theme.json';
 import * as SMS from 'expo-sms';
+import { deleteSponsorship } from '../../../api/Sponsorship';
+import { useNotifiCationModal } from '../../../NotificationModal';
 
 export default function GodefatherTab() {
     const [godfatherInfosLoaded, setGodFatherInfosLoaded] = useState(false);
-    const [godfatherInfos, setGodfatherInfos] = useState<GodfatherInfos>();
+    const [godfatherInfos, setGodfatherInfos] = useState<GodfatherInfos|null>(null);
     const [godfatherPictureLoaded, setGodfatherPictureLoaded] = useState(false);
     const [godfatherPicture, setGodfatherPicture] = useState('');
+    const [godfatherNotFound, setGodfatherNotFound] = useState(false);
 
     useEffect(() => {
         if (!godfatherInfosLoaded) {
@@ -26,6 +29,9 @@ export default function GodefatherTab() {
                 })
                 .catch((error) => {
                     console.log(error);
+                    if (mounted && error?.statusCode && error.statusCode === 404) {
+                        setGodfatherNotFound(true);
+                    }
                 });
 
             return () => {
@@ -56,6 +62,8 @@ export default function GodefatherTab() {
         }
     }, [godfatherPictureLoaded, godfatherInfosLoaded]);
 
+    const { showNotification, hideNotification } = useNotifiCationModal();
+
     const togglePressTel = useCallback(() => {
         if (godfatherInfos) {
             Linking.openURL(`tel:${godfatherInfos?.tel}`);
@@ -78,60 +86,116 @@ export default function GodefatherTab() {
         }
     }, [godfatherInfos]);
 
+    const toggleRemoveSponsorship = useCallback(() => {
+        Alert.alert(
+            'Suppression du parrainage',
+            'Êtes-vous sûrs de vouloir supprimer ce parrainage ?',
+            [
+                {
+                    onPress:() => {
+                        if (godfatherInfos) {
+                            showNotification();
+                            deleteSponsorship(godfatherInfos.sponsorshipId)
+                                .then(() => {
+                                    setGodFatherInfosLoaded(false);
+                                    setGodfatherPictureLoaded(false);
+                                    setGodfatherInfos(null);
+                                    setGodfatherPicture('');
+                                })
+                                .finally(() => {
+                                    hideNotification();
+                                });
+                        }
+                    },
+                    text:'Oui'
+                },
+                {
+                    text:'Annuler'
+                }
+            ])
+    }, [godfatherInfos]);
+
+    const toggleRefresh = useCallback(() => {
+        setGodFatherInfosLoaded(false);
+        setGodfatherPictureLoaded(false);
+    }, []);
+
     return (
         <Layout style={styles.container} level='1'>
-            <View style={styles.wrapper}>
-                <View style={styles.profilePictureContainer}>
-                {
-                    godfatherPictureLoaded ? (
-                        <Image
-                            source={{ uri: `data:;base64, ${godfatherPicture}` }}
-                            style={styles.profilePicture}
-                        />
-                    ) : (
-                        <Icon
-                            name='person-outline'
-                            fill={theme['color-primary-700']}
-                            style={styles.profilePicture}
-                        />
-                    )
-                }
-            </View>
-                <View style={styles.infosContainer}>
-                <View style={styles.fullnameContainer}>
-                    <Text>{godfatherInfos?.firstname}</Text>
-                    <Text>{godfatherInfos?.lastname}</Text>
-                </View>
-                <View style={styles.iconsContainer}>
-                    <TouchableOpacity onPress={togglePressTel}>
-                        <Icon
-                            name='phone-outline'
-                            fill={theme['color-primary-700']}
-                            style={styles.icon}
-                        />
-                    </TouchableOpacity>
+            {
+                godfatherNotFound ? (
+                    <View style={styles.notFoundWrapper}>
+                        <Text category='h6'>Vous n'avez pas de parrain</Text>
+                        <Button
+                            style={styles.buttons}
+                            onPress={toggleRefresh}
+                        >
+                            Rafraîchir
+                        </Button>
+                    </View>
+                ) : (
+                    <>
+                        <View style={styles.wrapper}>
+                            <View style={styles.profilePictureContainer}>
+                            {
+                                godfatherPictureLoaded ? (
+                                    <Image
+                                        source={{ uri: `data:;base64, ${godfatherPicture}` }}
+                                        style={styles.profilePicture}
+                                    />
+                                ) : (
+                                    <Icon
+                                        name='person-outline'
+                                        fill={theme['color-primary-700']}
+                                        style={styles.profilePicture}
+                                    />
+                                )
+                            }
+                            </View>
+                            <View style={styles.infosContainer}>
+                                <View style={styles.fullnameContainer}>
+                                    <Text>{godfatherInfos?.firstname}</Text>
+                                    <Text>{godfatherInfos?.lastname}</Text>
+                                </View>
+                                <View style={styles.iconsContainer}>
+                                    <TouchableOpacity onPress={togglePressTel}>
+                                        <Icon
+                                            name='phone-outline'
+                                            fill={theme['color-primary-700']}
+                                            style={styles.icon}
+                                        />
+                                    </TouchableOpacity>
 
-                    <TouchableOpacity onPress={togglePressSMS}>
-                        <Icon
-                            name='message-square-outline'
-                            fill={theme['color-primary-700']}
-                            style={styles.icon}
-                        />
-                    </TouchableOpacity>
-                </View>
-            </View>
-            </View>
-            <Button
-                style={styles.buttonRemoveSponsorship}
-            >
-                Rompre le parrainage
-            </Button>
+                                    <TouchableOpacity onPress={togglePressSMS}>
+                                        <Icon
+                                            name='message-square-outline'
+                                            fill={theme['color-primary-700']}
+                                            style={styles.icon}
+                                        />
+                                    </TouchableOpacity>
+                                </View>
+                            </View>
+                        </View>
+                        <Button
+                            style={styles.buttons}
+                            onPress={toggleRemoveSponsorship}
+                        >
+                            Rompre le parrainage
+                        </Button>           
+                    </>
+                )
+            }
         </Layout>
     );
 }
 
 const styles = StyleSheet.create({
     container: {
+        flex: 1,
+    },
+    notFoundWrapper: {
+        alignItems:'center',
+        justifyContent:'center',
         flex: 1,
     },
     wrapper: {
@@ -169,8 +233,9 @@ const styles = StyleSheet.create({
         justifyContent: 'space-around',
         width: '50%',
     },
-    buttonRemoveSponsorship: {
+    buttons: {
         width:'50%',
         alignSelf:'center',
+        marginTop: 20,
     },
 });
