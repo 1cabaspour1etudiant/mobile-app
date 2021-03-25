@@ -63,3 +63,20 @@ export async function deleteSponsorship(sponsorshipId: number) {
     return fetch(url, options)
         .then(checkError);
 }
+
+export async function postSponsorship(godfatherId:number, godsonId:number) {
+    const accessToken = await getAccessToken();
+    const url = `${API_URL}/sponsorship`;
+    const headers = new Headers();
+    headers.append('Authorization', `Bearer ${accessToken}`);
+    headers.append('Content-Type', 'application/json');
+
+    const options = {
+        method: 'POST',
+        headers,
+        body: JSON.stringify({ godfatherId, godsonId }),
+    };
+
+    return fetch(url, options)
+        .then(checkError);
+}
