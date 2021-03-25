@@ -1,3 +1,10 @@
+type PaginationResponse<T> = {
+    page: number;
+    lastPage: boolean;
+    items: T[];
+    pageSize: number;
+}
+
 export type UserSearch = {
     id: number;
     firstname: string;
@@ -6,12 +13,7 @@ export type UserSearch = {
     contacted: boolean;
 };
 
-export type UserSearchResponse = {
-    page: number;
-    lastPage: boolean;
-    items: UserSearch[];
-    pageSize: number;
-}
+export type UserSearchResponse = PaginationResponse<UserSearch>;
 
 export type Sponsorship = {
     sponsorshipId: number;
@@ -23,12 +25,7 @@ export type Sponsorship = {
     date: Date;
 };
 
-export type AwaitingSponsorshipResponse = {
-    page: number;
-    lastPage: boolean;
-    items: Sponsorship[];
-    pageSize: number;
-}
+export type AwaitingSponsorshipResponse = PaginationResponse<Sponsorship>;
 
 export type GetUserInfos = {
     distance: number;
@@ -59,9 +56,4 @@ export type GodsonsInfos = {
     address: string;
 };
 
-export type GetsonsResponse = {
-    page: number;
-    lastPage: boolean;
-    items: GodsonsInfos[];
-    pageSize: number;
-}
+export type GetsonsResponse = PaginationResponse<GodsonsInfos>;
