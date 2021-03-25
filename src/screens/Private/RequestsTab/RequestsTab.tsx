@@ -6,10 +6,9 @@ import { Sponsorship } from '../../../api/types';
 import { getSponsorshipRequests } from '../../../api/Sponsorship';
 import SpinnerList from '../../../components/SpinnerList';
 import ReceivedRequestSponsorshipListItem from './ReceivedRequestSponsorshipListItem';
+import { useUserStatus } from '../../hooks';
 
-const selector = ({
-    user: { infos: { status } }
-}: any) => ({ status });
+
 
 export default function RequestsTab() {
     const [loaded, setLoaded] = useState(false);
@@ -17,7 +16,7 @@ export default function RequestsTab() {
     const [page, setPage] = useState(-1);
     const [lastPage, setLastPage] = useState(false);
 
-    const { status }: { status:string } = useSelector(selector);
+    const status = useUserStatus();
 
     useEffect(() => {
         if (!loaded) {

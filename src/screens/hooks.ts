@@ -2,6 +2,7 @@ import { useEffect, useState, useCallback, useMemo } from 'react';
 import {userTestEmail, userTestPassword} from '@env';
 import { postLogin } from '../api/Auth';
 import { Platform, BackHandler } from 'react-native';
+import { useSelector } from 'react-redux';
 
 export function useLoginForTest() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -58,4 +59,10 @@ export function useDistance(distance: number = 0) {
   }, [distance]);
 
   return distanceAsKilometer;
+}
+
+const selector = ({ user: { infos: { status } } }: any) => ({ status });
+export function useUserStatus() {
+  const { status }: { status:string } = useSelector(selector);
+  return status;
 }
