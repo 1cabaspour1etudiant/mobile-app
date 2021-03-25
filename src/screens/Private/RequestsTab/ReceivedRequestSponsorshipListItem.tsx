@@ -4,6 +4,8 @@ import { Button, Icon, ListItem } from '@ui-kitten/components';
 import { getUserInfos, getUserProfilePicture} from '../../../api/User';
 import { GetUserInfos, Sponsorship } from '../../../api/types';
 import { useDistance } from '../../hooks';
+import { putSponsorshipAccept } from '../../../api/Sponsorship';
+import { useNotifiCationModal } from '../../../NotificationModal';
 
 export default function ReceivedRequestSponsorshipListItem({ sponsorshipId, godfatherId, godsonId, emitterId }: Sponsorship) {
     const [emitterInfos, setEmitterInfos] = useState<GetUserInfos>();
@@ -58,8 +60,17 @@ export default function ReceivedRequestSponsorshipListItem({ sponsorshipId, godf
         }
     }, [emitterInfosLoaded]);
 
-    const toggleAcceptButtonClick = useCallback(() => {
+    const { showNotification, hideNotification } = useNotifiCationModal();
 
+    const toggleAcceptButtonClick = useCallback(() => {
+        showNotification();
+        putSponsorshipAccept(sponsorshipId)
+            .catch((error) => {
+                console.log(error);
+            })
+            .finally(() => {
+                hideNotification();
+            });
     }, [sponsorshipId]);
 
     const toggleRefuseButtonClick = useCallback(() => {
