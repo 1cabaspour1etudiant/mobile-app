@@ -4,6 +4,7 @@ import { Layout, Icon, Button } from '@ui-kitten/components';
 import { getSponsorshipGodsonGodfather, getUserProfilePicture } from '../../../api/User';
 import { GodfatherInfos } from '../../../api/types';
 import {default as theme} from '../../../../theme.json';
+import * as SMS from 'expo-sms';
 
 export default function GodefatherTab() {
     const [godfatherInfosLoaded, setGodFatherInfosLoaded] = useState(false);
@@ -61,6 +62,22 @@ export default function GodefatherTab() {
         }
     }, [godfatherInfos]);
 
+    const togglePressSMS = useCallback(async () => {
+        if (godfatherInfos) {
+            SMS.isAvailableAsync()
+                .then(async (isAvailable) => {
+                    if (isAvailable) {
+                        await SMS.sendSMSAsync(godfatherInfos?.tel, '');
+                    } else {
+                        console.log('isAvailable', isAvailable);
+                    }
+                })
+                .catch((e) => {
+                    console.log('isAvailableAsync', e);
+                });
+        }
+    }, [godfatherInfos]);
+
     return (
         <Layout style={styles.container} level='1'>
             <View style={styles.wrapper}>
@@ -94,11 +111,13 @@ export default function GodefatherTab() {
                         />
                     </TouchableOpacity>
 
-                    <Icon
-                        name='message-square-outline'
-                        fill={theme['color-primary-700']}
-                        style={styles.icon}
-                    />
+                    <TouchableOpacity onPress={togglePressSMS}>
+                        <Icon
+                            name='message-square-outline'
+                            fill={theme['color-primary-700']}
+                            style={styles.icon}
+                        />
+                    </TouchableOpacity>
                 </View>
             </View>
             </View>
