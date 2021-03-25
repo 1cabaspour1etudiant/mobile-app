@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { Text, StyleSheet, View, Image } from 'react-native';
+import React, { useCallback, useEffect, useState } from 'react';
+import { Text, StyleSheet, View, Image, TouchableOpacity, Linking } from 'react-native';
 import { Layout, Icon, Button } from '@ui-kitten/components';
 import { getSponsorshipGodsonGodfather, getUserProfilePicture } from '../../../api/User';
 import { GodfatherInfos } from '../../../api/types';
@@ -55,6 +55,12 @@ export default function GodefatherTab() {
         }
     }, [godfatherPictureLoaded, godfatherInfosLoaded]);
 
+    const togglePressTel = useCallback(() => {
+        if (godfatherInfos) {
+            Linking.openURL(`tel:${godfatherInfos?.tel}`);
+        }
+    }, [godfatherInfos]);
+
     return (
         <Layout style={styles.container} level='1'>
             <View style={styles.wrapper}>
@@ -80,11 +86,14 @@ export default function GodefatherTab() {
                     <Text>{godfatherInfos?.lastname}</Text>
                 </View>
                 <View style={styles.iconsContainer}>
-                    <Icon
-                        name='phone-outline'
-                        fill={theme['color-primary-700']}
-                        style={styles.icon}
-                    />
+                    <TouchableOpacity onPress={togglePressTel}>
+                        <Icon
+                            name='phone-outline'
+                            fill={theme['color-primary-700']}
+                            style={styles.icon}
+                        />
+                    </TouchableOpacity>
+
                     <Icon
                         name='message-square-outline'
                         fill={theme['color-primary-700']}
