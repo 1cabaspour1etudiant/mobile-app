@@ -12,6 +12,7 @@ const selector = ({ user: { infos: { status, id } } }: any) => ({ status, id });
 
 export default function SearchUserListItem({ id, firstname, distance }: UserSearch) {
     const [ pictureLoaded, setPictureLoaded ] = useState(false);
+    const [contactRequestSent, setContactRequestSent] = useState(false);
     const [ picture, setPicture ] = useState('');
 
     useEffect(() => {
@@ -54,6 +55,9 @@ export default function SearchUserListItem({ id, firstname, distance }: UserSear
 
         showNotification();
         postSponsorship(godfatherId, godsonId)
+            .then(() => {
+                setContactRequestSent(true);
+            })
             .catch((error) => {
                 console.log(error);
             })
@@ -62,7 +66,13 @@ export default function SearchUserListItem({ id, firstname, distance }: UserSear
             });
     }, [currentUserId, status, id, showNotification, hideNotification]);
 
-    const renderItemAccessoryRight = useCallback(() => {
+    const renderItemAccessoryRight = useCallback((props) => {
+        if (contactRequestSent) {
+            return (
+                <Icon {...props} name='checkmark-outline' />
+            );
+        }
+
         return (
             <Button
                 size='tiny'
@@ -71,7 +81,7 @@ export default function SearchUserListItem({ id, firstname, distance }: UserSear
                 contacter
             </Button>
         );
-    }, [toggleSendContactRequest]);
+    }, [toggleSendContactRequest, contactRequestSent]);
 
     const renderItemAccessoryLeft = useCallback((props) => {
         if (pictureLoaded) {
