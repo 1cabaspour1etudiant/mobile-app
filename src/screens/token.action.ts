@@ -8,3 +8,9 @@ export const actionSetToken = (accessToken: string, accessTokenExpirationDate: s
     accessTokenExpirationDate,
   },
 });
+
+export function actionLogOut() {
+  return {
+    type: TOKEN_CLEAR_TOKEN,
+  };
+}
