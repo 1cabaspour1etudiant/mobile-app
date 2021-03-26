@@ -62,14 +62,23 @@ export function useDistance(distance: number = 0) {
   return distanceAsKilometer;
 }
 
-const selector = ({ user: { infos: { status } } }: any) => ({ status });
-export function useUserStatus() {
-  const { status }: { status:string } = useSelector(selector);
-  return status;
-}
-
+const selector = ({ user }: State) => ({ user });
 export function useUser() {
-  const selector = ({ user }: State) => ({ user });
   const { user } = useSelector(selector);
   return user;
+}
+
+export function useUserInfos() {
+  const { infos } = useUser();
+  return infos;
+}
+
+export function useUserProfilePicture() {
+  const { profilePicture } = useUser();
+  return profilePicture;
+}
+
+export function useUserStatus() {
+  const { status } = useUserInfos();
+  return status;
 }
