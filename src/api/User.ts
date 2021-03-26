@@ -4,7 +4,7 @@ import { checkError, getAccessToken, jsonMapper } from './utils';
 import Store from '../../store';
 import { actionSetToken } from '../screens/token.action';
 import { GetsonsResponse, GetUserInfos, GodfatherInfos, UserSearchResponse } from './types';
-import { PrivateUserInfos } from '../screens/types';
+import { UserInfos } from '../screens/types';
 
 export function getUserEmailIsAvailable(email: string): Promise<boolean> {
     const params = new URLSearchParams({ email });
@@ -108,7 +108,7 @@ export async function getUserProfilePicture(userId: number, abortController = ne
         .then((res) => res.text());
 }
 
-export async function getUserMeInfos(): Promise<PrivateUserInfos> {
+export async function getUserMeInfos(): Promise<UserInfos> {
     const accessToken = await getAccessToken();
     const url = `${API_URL}/user/me`;
     const headers = new Headers();

@@ -10,7 +10,7 @@ export type Address = {
     zipCode: string;
 };
 
-export type PrivateUserInfos = {
+export type UserInfos = {
     userId: number;
     firstname: string;
     lastname: string;
@@ -21,7 +21,7 @@ export type PrivateUserInfos = {
 };
 
 export type UserState = {
-    infos: PrivateUserInfos,
+    infos: UserInfos,
     profilePicture: string;
 }
 
