@@ -177,9 +177,14 @@ export async function getSponsorshipGodsonGodfather(abortController = new AbortC
         .then(jsonMapper);
 }
 
-export async function getSponsorshipGodfatherGodson(abortController = new AbortController()):Promise<GetsonsResponse> {
+export async function getSponsorshipGodfatherGodsons(page = 0, pageSize = 20, abortController = new AbortController()):Promise<GetsonsResponse> {
     const accessToken = await getAccessToken();
-    const url = `${API_URL}/sponsorship/godson`;
+    const params = new URLSearchParams({
+        page: page.toString(),
+        pageSize: pageSize.toString(),
+    });
+
+    const url = `${API_URL}/sponsorship/godsons?${params}`;
     const headers = new Headers();
     headers.append('Authorization', `Bearer ${accessToken}`);
 
