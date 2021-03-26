@@ -18,3 +18,12 @@ export type PrivateUserInfos = {
     status: UserStatus;
     validated: boolean;
 };
+
+export type UserState = {
+    infos: PrivateUserInfos,
+    profilePicture: string;
+}
+
+export type State = {
+    user: UserState,
+}
