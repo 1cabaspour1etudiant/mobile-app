@@ -14,6 +14,7 @@ import GodsonTab from './GodsonTab/GodsonTab';
 import ProfileTab from './ProfileTab/ProfileTab';
 import RequestsTab from './RequestsTab/RequestsTab';
 import {default as theme} from '../../../theme.json';
+import DrawerContent from './DrawerContent/DrawerContent';
 
 const Drawer = createDrawerNavigator();
 const { Navigator, Screen } = createBottomTabNavigator();
@@ -55,12 +56,6 @@ function TabBarContainer() {
             <Screen name='Demandes' component={RequestsTab}/>
             <Screen name='Profil' component={ProfileTab}/>
         </Navigator>
-    );
-}
-
-function DrawerContent() {
-    return (
-        <></>
     );
 }
 
