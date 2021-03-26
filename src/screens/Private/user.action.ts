@@ -1,4 +1,4 @@
-import { PrivateUserInfos } from "./types";
+import { PrivateUserInfos } from "../types";
 
 export const PRIVATE_USER_SET_INFOS = 'PRIVATE_USER_SET_INFOS';
 export const PRIVATE_USER_SET_PROFILE_PICTURE = 'PRIVATE_USER_SET_PROFILE_PICTURE';

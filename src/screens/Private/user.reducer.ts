@@ -1,4 +1,4 @@
-import { PrivateUserInfos, UserStatus } from './types';
+import { PrivateUserInfos, UserStatus } from '../types';
 import {
     PRIVATE_USER_SET_INFOS,
     PRIVATE_USER_SET_PROFILE_PICTURE

@@ -4,7 +4,7 @@ import { checkError, getAccessToken, jsonMapper } from './utils';
 import Store from '../../store';
 import { actionSetToken } from '../screens/token.action';
 import { GetsonsResponse, GetUserInfos, GodfatherInfos, UserSearchResponse } from './types';
-import { PrivateUserInfos } from '../screens/Private/types';
+import { PrivateUserInfos } from '../screens/types';
 
 export function getUserEmailIsAvailable(email: string): Promise<boolean> {
     const params = new URLSearchParams({ email });
