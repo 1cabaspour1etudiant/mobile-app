@@ -3,6 +3,7 @@ import {userTestEmail, userTestPassword} from '@env';
 import { postLogin } from '../api/Auth';
 import { Platform, BackHandler } from 'react-native';
 import { useSelector } from 'react-redux';
+import { State } from './Private/types';
 
 export function useLoginForTest() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -65,4 +66,10 @@ const selector = ({ user: { infos: { status } } }: any) => ({ status });
 export function useUserStatus() {
   const { status }: { status:string } = useSelector(selector);
   return status;
+}
+
+export function useUser() {
+  const selector = ({ user }: State) => ({ user });
+  const { user } = useSelector(selector);
+  return user;
 }
