@@ -1,14 +1,11 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Image, StyleSheet } from 'react-native';
 import { Button, Icon, ListItem } from '@ui-kitten/components';
 import { getUserProfilePicture} from '../../../api/User';
 import { UserSearch } from '../../../api/types';
-import { useDistance, useUserStatus } from '../../hooks';
-import { useSelector } from 'react-redux';
+import { useDistance, useUserInfos } from '../../hooks';
 import { postSponsorship } from '../../../api/Sponsorship';
 import { useNotifiCationModal } from '../../../NotificationModal';
-
-const selector = ({ user: { infos: { status, id } } }: any) => ({ status, id });
 
 export default function SearchUserListItem({ id, firstname, distance, contacted }: UserSearch) {
     const [ pictureLoaded, setPictureLoaded ] = useState(false);
@@ -38,7 +35,7 @@ export default function SearchUserListItem({ id, firstname, distance, contacted 
         }
     }, [pictureLoaded]);
 
-    const { status, id: currentUserId } = useSelector(selector);
+    const { status, userId } = useUserInfos();
     const { showNotification, hideNotification } = useNotifiCationModal();
 
     const toggleSendContactRequest = useCallback(() => {
@@ -46,11 +43,11 @@ export default function SearchUserListItem({ id, firstname, distance, contacted 
         let godsonId;
         
         if (status === 'godfather') {
-            godfatherId = currentUserId;
+            godfatherId = userId;
             godsonId = id;
         } else {
             godfatherId = id;
-            godsonId = currentUserId;
+            godsonId = userId;
         }
 
         showNotification();
@@ -64,7 +61,7 @@ export default function SearchUserListItem({ id, firstname, distance, contacted 
             .finally(() => {
                 hideNotification();
             });
-    }, [currentUserId, status, id, showNotification, hideNotification]);
+    }, [userId, status, id, showNotification, hideNotification]);
 
     const renderItemAccessoryRight = useCallback((props) => {
         if (contactRequestSent || contacted) {

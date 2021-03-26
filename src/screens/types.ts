@@ -11,6 +11,7 @@ export type Address = {
 };
 
 export type PrivateUserInfos = {
+    userId: number;
     firstname: string;
     lastname: string;
     tel: string;
