@@ -23,8 +23,8 @@ export default function GodefatherTab() {
             getSponsorshipGodsonGodfather(abortController)
                 .then((godfatherInfos) => {
                     if (mounted) {
-                        setGodFatherInfosLoaded(true);
                         setGodfatherInfos(godfatherInfos);
+                        setGodFatherInfosLoaded(true);
                     }
                 })
                 .catch((error) => {
@@ -204,6 +204,7 @@ const styles = StyleSheet.create({
         width: '95%',
         alignSelf:'center',
         alignItems:'center',
+        paddingTop: 15,
     },
     icon: {
         width: 24,
@@ -217,6 +218,7 @@ const styles = StyleSheet.create({
     profilePicture: {
         width: 100,
         height: 100,
+        borderRadius: 50,
     },
     infosContainer: {
         flexDirection: 'row',
