@@ -15,7 +15,7 @@ function InputPassword ({
 
     const renderIcon = (props:any) => (
         <TouchableWithoutFeedback onPress={toggleSecureEntry}>
-            <Icon {...props} name={secureTextEntry ? 'eye-off' : 'eye'}/>
+            <Icon {...props} name={secureTextEntry ? 'eye' : 'eye-off'}/>
         </TouchableWithoutFeedback>
     );
 
