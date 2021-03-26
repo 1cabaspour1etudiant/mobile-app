@@ -1,10 +1,11 @@
-import { UserInfos, UserStatus } from '../types';
+import { UserInfos, UserStatus } from '../../types';
 import {
     PRIVATE_USER_SET_INFOS,
     PRIVATE_USER_SET_PROFILE_PICTURE
 } from './user.action';
 
 const initialInfos:UserInfos = {
+    userId: 0,
     firstname: '',
     lastname: '',
     tel: '',

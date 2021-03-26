@@ -6,7 +6,7 @@ import {
 
 
 import { PRIVATE_CLEAR } from './constant';
-import { TokenState } from './types';
+import { TokenState } from '../types';
 
 const initialState: TokenState = {
   accessToken: '',

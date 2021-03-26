@@ -3,7 +3,7 @@ import {userTestEmail, userTestPassword} from '@env';
 import { postLogin } from '../api/Auth';
 import { Platform, BackHandler } from 'react-native';
 import { useSelector } from 'react-redux';
-import { State } from './types';
+import { State } from '../types';
 
 export function useLoginForTest() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
