@@ -18,6 +18,7 @@ export type UserInfos = {
     address: Address;
     status: UserStatus;
     validated: boolean;
+    email: string;
 };
 
 export type UserState = {

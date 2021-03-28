@@ -16,6 +16,7 @@ const initialInfos:UserInfos = {
     },
     status: UserStatus.GODSON,
     validated: false,
+    email: '',
 }
 
 const initialState = {
