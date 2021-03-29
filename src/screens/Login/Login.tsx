@@ -9,8 +9,8 @@ import { postLogin } from '../../api/Auth';
 import { useNavigation } from '@react-navigation/core';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { useNotifiCationModal } from '../../NotificationModal';
-import { getUserMeInfos, getUserMeProfilePicture } from '../../api/User';
-import { actionPrivateUserSetInfos, actionPrivateUserSetProfilePicture } from '../Private/user.action';
+import { getUserMeHasGodfather, getUserMeInfos, getUserMeProfilePicture } from '../../api/User';
+import { actionPrivateUserSetHasGodfather, actionPrivateUserSetInfos, actionPrivateUserSetProfilePicture } from '../Private/user.action';
 
 const selector = ({ login:{ email = '', password = '' } }) => ({ email, password });
 
@@ -42,17 +42,23 @@ export default function LoginScreen() {
     showNotification();
     postLogin(email, password)
       .then(async () => {
-        const awaitingUserMeInfos = getUserMeInfos();
-        const awaitingUserMeProfilePicture = getUserMeProfilePicture()
+        const [
+          userMeInfos,
+          userMeProfilePicture,
+          hasGodfather,
+        ] = await Promise.all([
+          getUserMeInfos(),
+          getUserMeProfilePicture()
           .catch((error) => {
             console.log(error);
             return '';
-          });
-
-        const [userMeInfos, userMeProfilePicture] = await Promise.all([awaitingUserMeInfos, awaitingUserMeProfilePicture]);
+          }),
+          getUserMeHasGodfather(),
+        ]);
 
         dispatch(actionPrivateUserSetInfos(userMeInfos));
         dispatch(actionPrivateUserSetProfilePicture(userMeProfilePicture));
+        dispatch(actionPrivateUserSetHasGodfather(hasGodfather));
       })
       .then(() => {
         if (connectionFailed) {
