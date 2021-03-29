@@ -36,63 +36,61 @@ export default function App() {
   }, [loaded]);
 
   return (
-    <>
+    <Provider store={Store}>
       <IconRegistry icons={EvaIconsPack} />
-      <ApplicationProvider {...eva} theme={{ ...eva.light, ...theme }}>
+      <ApplicationProvider {...eva} theme={{ ...eva.dark, ...theme }}>
         <NofificationContextProvider>
         {
           loaded && (
-            <Provider store={Store}>
-              <NavigationContainer ref={RootNavigation.navigationRef}>
-                <Stack.Navigator
-                  screenOptions={{
-                    animationEnabled: true,
-                    headerShown: false,
-                    ...TransitionPresets.SlideFromRightIOS,
-                  }}
-                >
-                  <Stack.Screen
-                    name="LoginScreen"
-                    component={LoginScreen}
-                  />
+            <NavigationContainer ref={RootNavigation.navigationRef}>
+              <Stack.Navigator
+                screenOptions={{
+                  animationEnabled: true,
+                  headerShown: false,
+                  ...TransitionPresets.SlideFromRightIOS,
+                }}
+              >
+                <Stack.Screen
+                  name="LoginScreen"
+                  component={LoginScreen}
+                />
 
-                  <Stack.Screen
-                    name="MemberSpaceScreen"
-                    component={MemberSpaceScreen}
-                  />
+                <Stack.Screen
+                  name="MemberSpaceScreen"
+                  component={MemberSpaceScreen}
+                />
 
-                  <Stack.Screen
-                    name="ForgotPasswordSendCodeScreen"
-                    component={ForgotPasswordSendCodeScreen}
-                  />
+                <Stack.Screen
+                  name="ForgotPasswordSendCodeScreen"
+                  component={ForgotPasswordSendCodeScreen}
+                />
 
-                  <Stack.Screen
-                    name="EmailAndPasswordScreen"
-                    component={EmailAndPasswordScreen}
-                  />
+                <Stack.Screen
+                  name="EmailAndPasswordScreen"
+                  component={EmailAndPasswordScreen}
+                />
 
-                  <Stack.Screen
-                    name="RegisterMainInfosScreen"
-                    component={RegisterMainInfosScreen}
-                  />
+                <Stack.Screen
+                  name="RegisterMainInfosScreen"
+                  component={RegisterMainInfosScreen}
+                />
 
-                  <Stack.Screen
-                    name="OnBoardingProfilePictureScreen"
-                    component={OnBoardingProfilePictureScreen}
-                  />
+                <Stack.Screen
+                  name="OnBoardingProfilePictureScreen"
+                  component={OnBoardingProfilePictureScreen}
+                />
 
-                  <Stack.Screen
-                    name="UpdateProfilePictureScreen"
-                    component={UpdateProfilePictureScreen}
-                  />
+                <Stack.Screen
+                  name="UpdateProfilePictureScreen"
+                  component={UpdateProfilePictureScreen}
+                />
 
-                </Stack.Navigator>
-              </NavigationContainer>
-            </Provider>
+              </Stack.Navigator>
+            </NavigationContainer>
           )
         }
         </NofificationContextProvider>
       </ApplicationProvider>
-    </>
+    </Provider>
   );
 }
