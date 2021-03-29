@@ -120,7 +120,6 @@ export default function ProfileTab() {
 
             <Button
                 style={styles.button}
-                size='tiny'
                 onPress={toggleUpdate}
             >
                 Modifier
