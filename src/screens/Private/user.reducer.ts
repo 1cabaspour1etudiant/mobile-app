@@ -1,7 +1,8 @@
 import { UserInfos, UserStatus } from '../../types';
 import {
     PRIVATE_USER_SET_INFOS,
-    PRIVATE_USER_SET_PROFILE_PICTURE
+    PRIVATE_USER_SET_PROFILE_PICTURE,
+    PRIVATE_USER_SET_HAS_GODFATHER,
 } from './user.action';
 
 const initialInfos:UserInfos = {
@@ -22,6 +23,7 @@ const initialInfos:UserInfos = {
 const initialState = {
     infos: initialInfos,
     profilePicture: '',
+    hasGodfather: false,
 };
 
 export default function(state = initialState, action: any) {
@@ -31,6 +33,9 @@ export default function(state = initialState, action: any) {
 
         case PRIVATE_USER_SET_PROFILE_PICTURE:
             return { ...state, profilePicture: action.value };
+
+        case PRIVATE_USER_SET_HAS_GODFATHER:
+            return { ...state, hasgodfather: action.value};
 
         default:
             return state;

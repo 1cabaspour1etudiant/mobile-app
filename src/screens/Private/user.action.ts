@@ -2,6 +2,7 @@ import { UserInfos } from "../../types";
 
 export const PRIVATE_USER_SET_INFOS = 'PRIVATE_USER_SET_INFOS';
 export const PRIVATE_USER_SET_PROFILE_PICTURE = 'PRIVATE_USER_SET_PROFILE_PICTURE';
+export const PRIVATE_USER_SET_HAS_GODFATHER = 'PRIVATE_USER_SET_HAS_GODFATHER';
 
 export function actionPrivateUserSetInfos(infos: UserInfos) {
     return {
@@ -14,5 +15,12 @@ export function actionPrivateUserSetProfilePicture(profilePicture: string) {
     return {
         type: PRIVATE_USER_SET_PROFILE_PICTURE,
         value: profilePicture,
+    };
+}
+
+export function actionPrivateUserSetHasGodfather(hasGodfather: boolean) {
+    return {
+        type: PRIVATE_USER_SET_HAS_GODFATHER,
+        value: hasGodfather,
     };
 }
