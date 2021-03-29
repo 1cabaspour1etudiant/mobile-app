@@ -38,8 +38,8 @@ export default function DrawerContent() {
                     )
                 }
                 <View style={styles.fullnameContainer}>
-                    <Text>{userInfos.firstname}</Text>
-                    <Text>{userInfos.lastname}</Text>
+                    <Text category='h5'>{userInfos.firstname}</Text>
+                    <Text category='h5'>{userInfos.lastname}</Text>
                 </View>
             </View>
             <View style={styles.bottomSection}>
@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
         marginTop: 15,
         flexDirection: 'row',
         justifyContent: 'space-between',
-        width: 90,
+        width: 120,
     },
     bottomSection: {
         flex: 1,
