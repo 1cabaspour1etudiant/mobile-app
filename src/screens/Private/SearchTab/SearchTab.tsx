@@ -60,7 +60,7 @@ export default function SearchTab() {
     }, [lastPage]);
 
     return (
-        <Layout style={{ flex: 1 }} level='1'>
+        <Layout style={styles.container} level='1'>
             {
                 hasGodfather ? (
                     <View style={styles.sentenceContainer}>
@@ -95,4 +95,4 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
-})
+});
