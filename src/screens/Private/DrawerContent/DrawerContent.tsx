@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 
-import { StyleSheet, View, Image } from 'react-native';
+import { StyleSheet, View, Image, TouchableWithoutFeedback } from 'react-native';
 
 import { Layout, Button, Text, Icon } from '@ui-kitten/components';
 import { useNavigation } from '@react-navigation/core';
@@ -20,6 +20,10 @@ export default function DrawerContent() {
         navigate('LoginScreen');
     }, [navigate, dispatch]);
 
+    const togglePressProfilePicture = useCallback(() => {
+        navigate('UpdateProfilePictureScreen');
+    }, []);
+
     return (
         <Layout style={styles.container} level='1'>
             <View style={styles.topSection}>
@@ -31,10 +35,14 @@ export default function DrawerContent() {
                             style={styles.pictureProfile}
                         />
                     ) : (
-                        <Image
-                            source={{ uri:`data:;base64, ${profilePicture}` }}
-                            style={styles.pictureProfile}
-                        />
+                        <TouchableWithoutFeedback
+                            onPress={togglePressProfilePicture}
+                        >
+                            <Image
+                                source={{ uri:`data:;base64, ${profilePicture}` }}
+                                style={styles.pictureProfile}
+                            />
+                        </TouchableWithoutFeedback>
                     )
                 }
                 <View style={styles.fullnameContainer}>

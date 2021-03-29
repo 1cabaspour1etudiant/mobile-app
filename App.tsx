@@ -16,6 +16,7 @@ import ForgotPasswordSendCodeScreen from './src/screens/ForgotPassword/ForgotPas
 import EmailAndPasswordScreen from './src/screens/Register/EmailAndPassword';
 import RegisterMainInfosScreen from './src/screens/Register/RegisterMainInfos';
 import OnBoardingProfilePictureScreen from './src/screens/Register/OnBoarding/ProfilePicture';
+import UpdateProfilePictureScreen from './src/screens/Private/DrawerContent/UpdateProfilePicture';
 
 import Store from './store';
 import * as RootNavigation from './RootNavigation';
@@ -78,6 +79,11 @@ export default function App() {
                   <Stack.Screen
                     name="OnBoardingProfilePictureScreen"
                     component={OnBoardingProfilePictureScreen}
+                  />
+
+                  <Stack.Screen
+                    name="UpdateProfilePictureScreen"
+                    component={UpdateProfilePictureScreen}
                   />
 
                 </Stack.Navigator>
