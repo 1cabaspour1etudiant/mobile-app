@@ -218,3 +218,19 @@ export async function patchUserMe(userInfos: UserPathInfos):Promise<UserInfos> {
         .then(checkError)
         .then(jsonMapper);
 }
+
+export async function getUserMeHasGodfather():Promise<boolean> {
+    const accessToken = await getAccessToken();
+    const url = `${API_URL}/user/me/hasgodfather`;
+    const headers = new Headers();
+    headers.append('Authorization', `Bearer ${accessToken}`);
+
+    const options = {
+        method: 'GET',
+        headers,
+    };
+
+    return fetch(url, options)
+        .then(checkError)
+        .then(jsonMapper)
+}
