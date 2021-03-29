@@ -3,7 +3,7 @@ import { UserRegister } from '../screens/Register/types';
 import { checkError, getAccessToken, jsonMapper } from './utils';
 import Store from '../../store';
 import { actionSetToken } from '../screens/token.action';
-import { GetsonsResponse, GetUserInfos, GodfatherInfos, UserSearchResponse } from './types';
+import { GetsonsResponse, GetUserInfos, GodfatherInfos, UserPathInfos, UserSearchResponse } from './types';
 import { UserInfos } from '../types';
 
 export function getUserEmailIsAvailable(email: string): Promise<boolean> {
@@ -193,6 +193,25 @@ export async function getSponsorshipGodfatherGodsons(page = 0, pageSize = 20, ab
         method: 'GET',
         headers,
         signal,
+    };
+
+    return fetch(url, options)
+        .then(checkError)
+        .then(jsonMapper);
+}
+
+export async function patchUserMe(userInfos: UserPathInfos):Promise<UserInfos> {
+    const accessToken = await getAccessToken();
+    const url = `${API_URL}/user/me`;
+
+    const headers = new Headers();
+    headers.append('Authorization', `Bearer ${accessToken}`);
+    headers.append('Content-Type', 'application/json');
+
+    const options = {
+        method: 'PATCH',
+        headers,
+        body: JSON.stringify(userInfos),
     };
 
     return fetch(url, options)

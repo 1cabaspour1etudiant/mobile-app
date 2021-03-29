@@ -57,3 +57,12 @@ export type GodsonsInfos = {
 };
 
 export type GetsonsResponse = PaginationResponse<GodsonsInfos>;
+
+export type UserPathInfos = {
+    email?:string;
+    tel?:string;
+    address?:string;
+    zipCode?:string;
+    city?:string;
+    password?:string;
+};
