@@ -4,6 +4,7 @@ import { postLogin } from '../api/Auth';
 import { Platform, BackHandler } from 'react-native';
 import { useSelector } from 'react-redux';
 import { State } from '../types';
+import { useNavigation } from '@react-navigation/core';
 
 export function useLoginForTest() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -87,3 +88,34 @@ export function useUserHasGodfather() {
   const { hasGodfather } = useUser();
   return hasGodfather;
 }
+
+/**
+ *
+ * @param {boolean} enabled
+ * @param {Function} clearState
+ * @desc Allow to prevent native back hardware and navigate to a provided
+ * [origin] parameter in the screen
+ */
+ export function useBackHardware(
+  previousScreen = '',
+  enabled = true,
+  clearState = () => {},
+) {
+  const { navigate } = useNavigation();
+
+  useEffect(() => {
+    if (enabled) {
+      const listener = () => {
+        navigate(previousScreen);
+        clearState();
+        return true;
+      };
+
+      BackHandler.addEventListener('hardwareBackPress', listener);
+
+      return () => {
+        BackHandler.removeEventListener('hardwareBackPress', listener);
+      };
+    }
+  }, [enabled]);
+};
