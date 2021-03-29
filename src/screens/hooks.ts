@@ -82,3 +82,8 @@ export function useUserStatus() {
   const { status } = useUserInfos();
   return status;
 }
+
+export function useUserHasGodfather() {
+  const { hasGodfather } = useUser();
+  return hasGodfather;
+}

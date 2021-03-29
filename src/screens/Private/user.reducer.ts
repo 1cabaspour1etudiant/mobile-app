@@ -35,7 +35,7 @@ export default function(state = initialState, action: any) {
             return { ...state, profilePicture: action.value };
 
         case PRIVATE_USER_SET_HAS_GODFATHER:
-            return { ...state, hasgodfather: action.value};
+            return { ...state, hasGodfather: action.value};
 
         default:
             return state;

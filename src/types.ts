@@ -24,6 +24,7 @@ export type UserInfos = {
 export type UserState = {
     infos: UserInfos,
     profilePicture: string;
+    hasGodfather: boolean;
 }
 
 export interface TokenState {
