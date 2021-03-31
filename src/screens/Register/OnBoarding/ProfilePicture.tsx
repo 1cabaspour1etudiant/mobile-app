@@ -1,90 +1,60 @@
 import React, { useCallback, useState } from 'react';
-import { StyleSheet, View, TouchableWithoutFeedback, Image } from 'react-native'
-import { Layout, Text, Button, Icon } from '@ui-kitten/components';
-
-import {
-    MediaTypeOptions,
-    launchCameraAsync,
-} from 'expo-image-picker';
+import { StyleSheet } from 'react-native'
+import { Layout } from '@ui-kitten/components';
 
 import { putUserMePicture } from '../../../api/User';
 import { useLoginForTest } from '../../hooks';
 import { useNavigation } from '@react-navigation/core';
 import { useNotifiCationModal } from '../../../NotificationModal';
+import { useDispatch } from 'react-redux';
+import { actionPrivateUserSetProfilePicture } from '../../Private/user.action';
+import ProfilePicture from '../../Features/ProfilePicture';
 
-export default function ProfilePicture() {
-    const [image, setImage] = useState('');
+export default function OnBoardingProfilePicture() {
+    const [imageUri, setImageUri] = useState('');
+    const [imageBase64, setImageBase64] = useState('');
     useLoginForTest();
 
+    const dispatch = useDispatch();
     const { navigate } = useNavigation();
     const {
         showNotification,
         hideNotification,
     } = useNotifiCationModal();
 
-    const toggleCamera = useCallback(async () => {
-        try {
-          const result = await launchCameraAsync({
-            mediaTypes: MediaTypeOptions.Images,
-            base64: true,
-            allowsEditing: true,
-            aspect: [4, 3],
-            quality: 1,
-          });
-    
-          if (!result.cancelled) {
-            setImage(result.uri);
-          }
-        } catch (E) {
-          console.log(E);
-        }
+    const toggleOnPictureProvided = useCallback((imageUri: string, imageBase64: string) => {
+        setImageUri(imageUri);
+        setImageBase64(imageBase64);
     }, []);
 
-    const toggleOnPressSendButton = useCallback(() => {
+    const toggleOnEnd = useCallback(() => {
         showNotification();
-        putUserMePicture(image)
-            .then(() => {   
-                hideNotification();
-                navigate('MemberSpaceScreen');
-            })
+        putUserMePicture(imageUri)
             .catch((error) => {
-                hideNotification();
                 console.log(error);
+            })
+            .finally(() => {
+                hideNotification();
+                dispatch(actionPrivateUserSetProfilePicture(imageBase64));
+                navigate('MemberSpaceScreen');
             });
-    }, [image, navigate, showNotification, hideNotification]);
+    }, [
+        imageUri,
+        imageBase64,
+        showNotification,
+        hideNotification,
+        dispatch,
+        navigate,
+    ]);
 
     return (
         <Layout style={styles.container} level='1'>
-            <View style={styles.titleContainer}>
-                <Text style={styles.text} category='h1'>Renseignez votre photo de profil</Text>
-            </View>
-            <View style={styles.screenBody}>
-                <TouchableWithoutFeedback
-                    onPress={toggleCamera}
-                >
-                    <View style={styles.buttonPicture}>
-                        {
-                            image === '' ? (
-                                <Icon
-                                    style={styles.icon}
-                                    fill='#8F9BB3'
-                                    name='camera-outline'
-                                />
-                            ) : (
-                                <Image source={{ uri: image }} style={styles.image} />
-                            )
-                        }
-                    </View>
-                </TouchableWithoutFeedback>
-
-                <Button
-                    appearance='ghost'
-                    status='basic'
-                    onPress={toggleOnPressSendButton}
-                >
-                    Envoyer
-                </Button>
-            </View>
+            <ProfilePicture
+                title='Renseignez votre photo de profil'
+                imageUri={imageUri}
+                onEnd={toggleOnEnd}
+                onPictureProvided={toggleOnPictureProvided}
+            />
         </Layout>
     );
 }
@@ -94,37 +64,5 @@ const styles = StyleSheet.create({
         flex: 1,
         paddingLeft: 15,
         paddingRight: 15
-    },
-    titleContainer: {
-        flex:1,
-        justifyContent:'center',
-    },
-    text: {
-        margin: 2,
-        textAlign: 'center'
-    },
-    screenBody: {
-        flex: 3,
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        paddingBottom: 15
-    },
-    buttonPicture: {
-        width:250,
-        borderColor: '#8F9BB3',
-        borderWidth: 1,
-        height: 250,
-        borderRadius: 250,
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
-    image: {
-        width:250,
-        height: 250,
-        borderRadius: 250,
-    },
-    icon: {
-        width: 100,
-        height: 100,
     },
 });
