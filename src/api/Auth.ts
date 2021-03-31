@@ -39,3 +39,19 @@ export function postPasswordRecoveryCode(email:string) {
     return fetch(url, options)
         .then(checkError);
 }
+
+
+export function postPasswordRecover(email:string, code:number, password: string) {
+    const url = `${API_URL}/auth/password/recover`;
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+
+    const options = {
+        method: 'POST',
+        headers,
+        body: JSON.stringify({ email, code, password }),
+    };
+
+    return fetch(url, options)
+        .then(checkError);
+}
