@@ -24,3 +24,18 @@ export function postLogin(email: string, password: string) {
             Store.dispatch(actionSetToken(accessToken, accessTokenExpirationDate + ''));
         });
 }
+
+export function postPasswordRecoveryCode(email:string) {
+    const url = `${API_URL}/auth/password/recoverycode`;
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+
+    const options = {
+        method: 'POST',
+        headers,
+        body: JSON.stringify({ email }),
+    };
+
+    return fetch(url, options)
+        .then(checkError);
+}
