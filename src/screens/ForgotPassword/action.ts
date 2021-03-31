@@ -9,7 +9,7 @@ export function actionForgotPasswordSetEmail(email: string) {
     };
 }
 
-export function actionForgotPasswordSetVerificationCode(code: string) {
+export function actionForgotPasswordSetVerificationCode(code: number) {
     return {
         type: FORGOT_PASSWORD_SET_VERIFICATION_CODE,
         value: code,
