@@ -22,6 +22,7 @@ import Store from './store';
 import * as RootNavigation from './RootNavigation';
 import { EvaIconsPack } from '@ui-kitten/eva-icons';
 import { NofificationContextProvider } from './src/NotificationModal';
+import ProvideCodeAndPassword from './src/screens/ForgotPassword/ProvideCodeAndPassword';
 import { default as theme } from './theme.json';
 
 const Stack = createStackNavigator();
@@ -83,6 +84,11 @@ export default function App() {
                 <Stack.Screen
                   name="UpdateProfilePictureScreen"
                   component={UpdateProfilePictureScreen}
+                />
+
+                <Stack.Screen
+                  name='ProvideCodeAndPassword'
+                  component={ProvideCodeAndPassword}
                 />
 
               </Stack.Navigator>

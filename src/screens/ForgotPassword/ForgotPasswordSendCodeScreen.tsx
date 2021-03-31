@@ -1,8 +1,22 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { Layout, Text, Input, Button, } from '@ui-kitten/components';
 import { StyleSheet, View } from 'react-native';
+import { useDispatch } from 'react-redux';
+import { actionForgotPasswordSetEmail } from './action';
+import { useNotifiCationModal } from '../../NotificationModal';
+import { useNavigation } from '@react-navigation/core';
 
 export default function ForgotPasswordSendCodeScreen() {
+    const { showNotification, hideNotification } = useNotifiCationModal();
+    const { navigate } = useNavigation();
+    const dispatch = useDispatch();
+    const toggleOnChangeEmailAddress = useCallback((email: string) => {
+        dispatch(actionForgotPasswordSetEmail(email));
+    }, [dispatch]);
+
+    const toggleSendRequestForRecoveryCode = useCallback(() => {
+        navigate('ProvideCodeAndPassword');
+    }, [showNotification, hideNotification, navigate]);
 
     return (
         <Layout style={styles.container}>
@@ -13,10 +27,12 @@ export default function ForgotPasswordSendCodeScreen() {
                     style={styles.input}
                     placeholder='Email'
                     keyboardType='email-address'
+                    onChangeText={toggleOnChangeEmailAddress}
                 />
 
                 <Button
                     style={styles.input}
+                    onPress={toggleSendRequestForRecoveryCode}
                 >
                     Envoyer
                 </Button>
