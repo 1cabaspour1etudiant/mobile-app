@@ -1,11 +1,12 @@
 import React from 'react';
-import { TouchableWithoutFeedback } from 'react-native';
+import { TouchableWithoutFeedback, StyleProp, TextStyle } from 'react-native';
 import { Icon, Input } from '@ui-kitten/components';
 
 function InputPassword ({
     value = '',
     onChanchValue = (v:string) => {},
     status = '',
+    style = {} as StyleProp<TextStyle>
 }, ref: React.LegacyRef<Input>) {
     const [secureTextEntry, setSecureTextEntry] = React.useState(true);
 
@@ -28,6 +29,7 @@ function InputPassword ({
             secureTextEntry={secureTextEntry}
             onChangeText={nextValue => onChanchValue(nextValue)}
             status={status}
+            style={style}
         />
     );
 };
