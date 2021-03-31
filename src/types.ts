@@ -32,6 +32,13 @@ export interface TokenState {
     accessTokenExpirationDate: string;
 }
 
+export type ForgottenPasswordState = {
+    email: string;
+    code: number;
+    password: string;
+};
+
 export type State = {
     user: UserState,
+    forgottenPassword: ForgottenPasswordState,
 }
