@@ -6,28 +6,8 @@ import { useNotifiCationModal } from '../../../NotificationModal';
 import ProfilePicture from '../../Features/ProfilePicture';
 import { useBackHardware } from '../../hooks';
 import { actionPrivateUserSetProfilePicture } from '../user.action';
-import { Icon,  Layout,  TopNavigationAction } from '@ui-kitten/components';
-
-function BackIcon(props: any) {
-    return (
-        <Icon {...props} name='arrow-back'/>
-    )
-}
-
-function BackAction() {
-    const { navigate } = useNavigation();
-
-    const togglePressBack = useCallback(() => {
-        navigate('MemberSpaceScreen');
-    }, [navigate]);
-
-    return (
-        <TopNavigationAction
-            onPress={togglePressBack}
-            icon={BackIcon}
-        />
-    );
-};
+import { Layout } from '@ui-kitten/components';
+import BackAction from '../../../components/BackAction';
 
 export default function UpdateProfilePicture() {
     const [imageUri, setImageUri] = useState('');
@@ -70,7 +50,7 @@ export default function UpdateProfilePicture() {
 
     return (
         <Layout style={{ flex: 1 }} level='1'>
-            <BackAction />
+            <BackAction backScreen='MemberSpaceScreen' />
             <ProfilePicture
                 title='Changez votre photo de profil'
                 imageUri={imageUri}
