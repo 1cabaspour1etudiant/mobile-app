@@ -24,7 +24,6 @@ export default function GodsonTab() {
                         setPage(page);
                         setLastPage(lastPage);
                         setGodsons([...godsons, ...items]);
-                        console.log(items);
                         setGodsonsLoaded(true);
                     }
                 })
@@ -37,8 +36,6 @@ export default function GodsonTab() {
             };
         }
     }, [godsonsLoaded]);
-
-    console.log(godsonsLoaded);
 
     useEffect(() => {
         if (refreshing) {
