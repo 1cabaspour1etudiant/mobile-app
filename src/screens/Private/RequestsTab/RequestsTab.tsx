@@ -118,7 +118,7 @@ export default function RequestsTab() {
             {
                 loaded && sponsorships.length === 0 && (
                     <>
-                        <Text category='h6'>Vous n'avez pas de demandes de en attentes</Text>
+                        <Text category='h6'>Vous n'avez pas de demandes en attente</Text>
                         <Button
                             style={{width: '50%', marginTop:20 }}
                             onPress={triggerRefreshing}
