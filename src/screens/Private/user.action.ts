@@ -6,6 +6,7 @@ export const PRIVATE_USER_SET_HAS_GODFATHER = 'PRIVATE_USER_SET_HAS_GODFATHER';
 
 export const PRIVATE_USER_REFRESH_SEARCH_TAB = 'PRIVATE_USER_REFRESH_SEARCH_TAB';
 export const PRIVATE_USER_REFRESH_GODFATHER_TAB = 'PRIVATE_USER_REFRESH_GODFATHER_TAB';
+export const PRIVATE_USER_REFRESH_GODSON_TAB = 'PRIVATE_USER_REFRESH_GODSON_TAB';
 export const PRIVATE_USER_REFRESH_REQUEST_TAB = 'PRIVATE_USER_REFRESH_REQUEST_TAB';
 
 export function actionPrivateUserSetInfos(infos: UserInfos) {
@@ -38,6 +39,12 @@ export function actionPrivateUserRefreshSearchTab() {
 export function actionPrivateUserRefreshGodfatherTab() {
     return {
         type: PRIVATE_USER_REFRESH_GODFATHER_TAB,
+    };
+}
+
+export function actionPrivateUserRefreshGodsonTab() {
+    return {
+        type: PRIVATE_USER_REFRESH_GODSON_TAB,
     };
 }
 

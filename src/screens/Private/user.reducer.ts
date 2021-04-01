@@ -6,6 +6,7 @@ import {
     PRIVATE_USER_REFRESH_SEARCH_TAB,
     PRIVATE_USER_REFRESH_GODFATHER_TAB,
     PRIVATE_USER_REFRESH_REQUEST_TAB,
+    PRIVATE_USER_REFRESH_GODSON_TAB,
 } from './user.action';
 
 const initialInfos:UserInfos = {
@@ -29,10 +30,11 @@ const initialState:UserState = {
     hasGodfather: false,
     requestTabRefreshIndex: 0,
     godfatherTabRefreshIndex: 0,
+    godsonTabRefreshIndex: 0,
     searchTabRefreshIndex: 0,
 };
 
-export default function(state = initialState, action: any) {
+export default function(state = initialState, action: any):UserState {
     switch(action.type) {
         case PRIVATE_USER_SET_INFOS:
             return { ...state, infos:action.value };
@@ -48,6 +50,9 @@ export default function(state = initialState, action: any) {
 
         case PRIVATE_USER_REFRESH_GODFATHER_TAB:
             return { ...state, godfatherTabRefreshIndex: state.godfatherTabRefreshIndex + 1};
+
+        case PRIVATE_USER_REFRESH_GODSON_TAB:
+            return {...state, godsonTabRefreshIndex: state.godsonTabRefreshIndex + 1};
 
         case PRIVATE_USER_REFRESH_REQUEST_TAB:
             return { ...state, requestTabRefreshIndex: state.requestTabRefreshIndex + 1};
