@@ -1,8 +1,9 @@
-import { UserInfos, UserStatus } from '../../types';
+import { UserInfos, UserState, UserStatus } from '../../types';
 import {
     PRIVATE_USER_SET_INFOS,
     PRIVATE_USER_SET_PROFILE_PICTURE,
     PRIVATE_USER_SET_HAS_GODFATHER,
+    PRIVATE_USER_REFRESH_SEARCH_TAB,
 } from './user.action';
 
 const initialInfos:UserInfos = {
@@ -20,10 +21,13 @@ const initialInfos:UserInfos = {
     email: '',
 }
 
-const initialState = {
+const initialState:UserState = {
     infos: initialInfos,
     profilePicture: '',
     hasGodfather: false,
+    requestTabRefreshIndex: 0,
+    godFatherTabRefreshIndex: 0,
+    searchTabRefreshIndex: 0,
 };
 
 export default function(state = initialState, action: any) {
@@ -36,6 +40,9 @@ export default function(state = initialState, action: any) {
 
         case PRIVATE_USER_SET_HAS_GODFATHER:
             return { ...state, hasGodfather: action.value};
+
+        case PRIVATE_USER_REFRESH_SEARCH_TAB:
+            return { ...state, searchTabRefreshIndex: state.searchTabRefreshIndex + 1};
 
         default:
             return state;
