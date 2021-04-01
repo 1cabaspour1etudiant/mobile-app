@@ -7,11 +7,10 @@ import {
     Input,
     Button,
     CheckBox,
-
 } from '@ui-kitten/components';
 
 import {
-    actionRegisterSetAdress,
+    actionRegisterSetAddress,
     actionRegisterSetCity,
     actionRegisterSetFirstname,
     actionRegisterSetLastname,
@@ -23,31 +22,33 @@ import {
 import { useNavigation } from '@react-navigation/core';
 import { useNotifiCationModal } from '../../NotificationModal';
 import { postUser } from '../../api/User';
-import { UserRegister } from './types';
+import { State, UserRegister } from '../../types';
 
-const selector = ({
+function selector({
     register: {
-        email = '',
-        password = '',
-        tel = '',
-        firstname = '',
-        lastname = '',
-        adress = '',
-        city = '',
-        zipCode = '',
-        status = '',
+        email,
+        password,
+        tel,
+        firstname,
+        lastname,
+        address,
+        city,
+        zipCode,
+        status,
     },
-}) => ({
-    email,
-    password,
-    tel,
-    firstname,
-    lastname,
-    adress,
-    city,
-    zipCode,
-    status,
-});
+}: State) {
+    return {
+        email,
+        password,
+        tel,
+        firstname,
+        lastname,
+        address,
+        city,
+        zipCode,
+        status,
+    };
+}
 
 export default function RegisterMainInfos() {
     const {
@@ -56,7 +57,7 @@ export default function RegisterMainInfos() {
         tel,
         firstname,
         lastname,
-        adress,
+        address,
         city,
         zipCode,
         status,
@@ -72,7 +73,7 @@ export default function RegisterMainInfos() {
 
     const refInputFirstname = useRef(null);
     const refInputLastname = useRef(null);
-    const refInputAdress = useRef(null);
+    const refInputAddress = useRef(null);
     const refInputCity = useRef(null);
     const refInputZipCode = useRef(null);
 
@@ -95,8 +96,8 @@ export default function RegisterMainInfos() {
         dispatch(actionRegisterSetLastname(lastname));
     }, [dispatch]);
 
-    const toggleOnChangeAdress = useCallback((adress) => {
-        dispatch(actionRegisterSetAdress(adress));
+    const toggleOnChangeAddress = useCallback((address) => {
+        dispatch(actionRegisterSetAddress(address));
     }, [dispatch]);
 
     const toggleOnChangeCity = useCallback((city) => {
@@ -118,7 +119,7 @@ export default function RegisterMainInfos() {
             firstname === ''
             || lastname === ''
             || tel === ''
-            || adress === ''
+            || address === ''
             || zipCode === ''
         ) {
             return;
@@ -131,7 +132,7 @@ export default function RegisterMainInfos() {
             firstname,
             lastname,
             tel,
-            adress,
+            address,
             city,
             zipCode,
             status,
@@ -153,7 +154,7 @@ export default function RegisterMainInfos() {
         tel,
         firstname,
         lastname,
-        adress,
+        address,
         city,
         zipCode,
         status,
@@ -202,7 +203,7 @@ export default function RegisterMainInfos() {
                         placeholder='Nom'
                         onChangeText={toggleOnChangeLastname}
                         returnKeyType='next'
-                        onSubmitEditing={callbackSubmitEditing(refInputAdress)}
+                        onSubmitEditing={callbackSubmitEditing(refInputAddress)}
                         blurOnSubmit={false}
                         autoCompleteType='name'
                         textContentType='name'
@@ -211,11 +212,11 @@ export default function RegisterMainInfos() {
 
                 <Layout style={styles.rowContainer} level='1'>
                     <Input
-                        ref={refInputAdress}
+                        ref={refInputAddress}
                         style={styles.input}
-                        value={adress}
+                        value={address}
                         placeholder='Adresse'
-                        onChangeText={toggleOnChangeAdress}
+                        onChangeText={toggleOnChangeAddress}
                         returnKeyType='next'
                         onSubmitEditing={callbackSubmitEditing(refInputCity)}
                         blurOnSubmit={false}

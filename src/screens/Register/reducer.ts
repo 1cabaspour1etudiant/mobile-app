@@ -4,14 +4,14 @@ import {
     REGISTER_SET_PHONE_NUMBER,
     REGISTER_SET_FIRSTNAME,
     REGISTER_SET_LASTNAME,
-    REGISTER_SET_ADRESS,
+    REGISTER_SET_ADDRESS,
     REGISTER_SET_CITY,
     REGISTER_SET_ZIP_CODE,
     REGISTER_SET_STATUS,
 } from './action';
 
 import { statusList } from './lists';
-import { UserRegister } from './types';
+import { UserRegister } from '../../types';
 
 const initialState: UserRegister = {
     email: '',
@@ -19,7 +19,7 @@ const initialState: UserRegister = {
     tel: '',
     firstname: '',
     lastname:'',
-    adress: '',
+    address: '',
     city: '',
     zipCode: '',
     status: statusList[0],
@@ -42,8 +42,8 @@ export default function(state = initialState, action: any): UserRegister {
         case REGISTER_SET_LASTNAME:
             return {...state, lastname: action.value};
 
-        case REGISTER_SET_ADRESS:
-            return {...state, adress: action.value};
+        case REGISTER_SET_ADDRESS:
+            return {...state, address: action.value};
 
         case REGISTER_SET_CITY:
             return {...state, city: action.value};

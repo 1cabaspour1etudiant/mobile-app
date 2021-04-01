@@ -1,3 +1,15 @@
+export interface UserRegister {
+    email: string;
+    password: string;
+    tel: string;
+    firstname: string;
+    lastname: string;
+    address: string;
+    city: string;
+    zipCode: string;
+    status: string;
+}
+
 export enum UserStatus {
     ADMIN = 'admin',
     GODSON = 'godson',
@@ -43,8 +55,9 @@ export type ForgottenPasswordState = {
 };
 
 export type State = {
-    user: UserState,
-    forgottenPassword: ForgottenPasswordState,
+    user: UserState
+    forgottenPassword: ForgottenPasswordState
+    register: UserRegister
 }
 
 export enum NOTIFICATION_TYPES {
