@@ -13,7 +13,6 @@ import ProfilePicture from '../../Features/ProfilePicture';
 export default function OnBoardingProfilePicture() {
     const [imageUri, setImageUri] = useState('');
     const [imageBase64, setImageBase64] = useState('');
-    useLoginForTest();
 
     const dispatch = useDispatch();
     const { navigate } = useNavigation();
