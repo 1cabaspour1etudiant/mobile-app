@@ -4,7 +4,7 @@ import { Sponsorship } from '../../../api/types';
 import { getSponsorshipRequests } from '../../../api/Sponsorship';
 import SpinnerList from '../../../components/SpinnerList';
 import ReceivedRequestSponsorshipListItem from './ReceivedRequestSponsorshipListItem';
-import { useUserStatus } from '../../hooks';
+import { useRequestRefreshIndex, useUserStatus } from '../../hooks';
 import { RefreshControl, StyleSheet } from 'react-native';
 import { default as theme } from '../../../../theme.json';
 
@@ -16,6 +16,36 @@ export default function RequestsTab() {
     const [lastPage, setLastPage] = useState(false);
     const [refreshing, setRefreshing] = useState(false);
     const status = useUserStatus();
+
+    const requestRefreshIndex = useRequestRefreshIndex();
+    useEffect(() => {
+        if (loaded) {
+            let mounted = true;
+            (async () => {
+                const sponsorships = [];
+                for (let i = 0; i <= page; i++) {
+                    const { items } = await getSponsorshipRequests(i, 20, 'received');
+                    sponsorships.push(...items);
+                }
+
+                if (mounted) {
+                    setSponsorships(sponsorships);
+                }
+            })()
+                .catch((error) => {
+                    console.log(error);
+                })
+                .finally(() => {
+                    if (mounted) {
+                        setRefreshing(false);
+                    }
+                });
+
+            return () => {
+                mounted = false;
+            };
+        }
+    }, [requestRefreshIndex]);
 
     useEffect(() => {
         if (!loaded) {
