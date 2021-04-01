@@ -29,6 +29,7 @@ import ProvideCodeAndPassword from './src/screens/ForgotPassword/ProvideCodeAndP
 import { default as theme } from './theme.json';
 import { NotificationData, NOTIFICATION_TYPES } from './src/types';
 import { actionPrivateUserRefreshGodfatherTab, actionPrivateUserRefreshGodsonTab, actionPrivateUserRefreshRequestTab, actionPrivateUserRefreshSearchTab, actionPrivateUserSetHasGodfather } from './src/screens/Private/user.action';
+import { getUserMeHasGodfather } from './src/api/User';
 
 const Stack = createStackNavigator();
 
@@ -57,6 +58,13 @@ function handleNotification(notification: Notifications.Notification, tap?:boole
         Store.dispatch(actionPrivateUserRefreshGodfatherTab());
         Store.dispatch(actionPrivateUserRefreshGodsonTab());
         Store.dispatch(actionPrivateUserRefreshRequestTab());
+        getUserMeHasGodfather()
+          .then((hasgodfather) => {
+            Store.dispatch(actionPrivateUserSetHasGodfather(hasgodfather));
+          })
+          .catch((error) => {
+            console.log(error);
+          });
         break;
 
       case NOTIFICATION_TYPES.SPONSORSHIP_REQUEST:
