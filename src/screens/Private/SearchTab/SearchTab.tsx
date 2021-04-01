@@ -1,12 +1,15 @@
 import React, { useCallback, useEffect, useState } from 'react';
 
+import { useDispatch } from 'react-redux';
 import { Layout, List, Text } from '@ui-kitten/components';
-import { StyleSheet, View } from 'react-native';
+import { RefreshControl, StyleSheet, View } from 'react-native';
 import { getUserSearch } from '../../../api/User';
 import { UserSearch } from '../../../api/types';
 import SpinnerList from '../../../components/SpinnerList';
 import SearchUserListItem from './SearchUserListItem';
 import { useSearchRefreshIndex, useUserHasGodfather } from '../../hooks';
+import {default as theme} from '../../../../theme.json';
+import { actionPrivateUserRefreshSearchTab } from '../user.action';
 
 export default function SearchTab() {
     const [loaded, setLoaded] = useState(false);
@@ -18,6 +21,7 @@ export default function SearchTab() {
     const hasGodfather = useUserHasGodfather();
 
     const searchRefreshIndex = useSearchRefreshIndex();
+    const dispatch = useDispatch();
 
     useEffect(() => {
         if (loaded) {
@@ -35,16 +39,13 @@ export default function SearchTab() {
                 }
 
                 if (mounted) {
+                    setRefreshing(false);
                     setUsers(users);
                 }
             })()
                 .catch((error) => {
                     console.log(error);
-                })
-                .finally(() => {
-                    if (mounted) {
-                        setRefreshing(false);
-                    }
+                    setRefreshing(false);
                 });
 
             return () => {
@@ -96,6 +97,10 @@ export default function SearchTab() {
         }
     }, [lastPage]);
 
+    const onRefresh = useCallback(() => {
+        dispatch(actionPrivateUserRefreshSearchTab());
+    }, [dispatch]);
+
     return (
         <Layout style={styles.container} level='1'>
             {
@@ -115,6 +120,13 @@ export default function SearchTab() {
                             onEndReachedThreshold={0.25}
                             onEndReached={onEndReached}
                             removeClippedSubviews={true}
+                            refreshControl={
+                                <RefreshControl
+                                    colors={[theme['color-primary-700']]}
+                                    refreshing={refreshing}
+                                    onRefresh={onRefresh}
+                                />
+                            }
                         />
                     </>
                 )
