@@ -7,6 +7,7 @@ import {default as theme} from '../../../../theme.json';
 import * as SMS from 'expo-sms';
 import { deleteSponsorship } from '../../../api/Sponsorship';
 import { useNotifiCationModal } from '../../../NotificationModal';
+import { useGodfatherRefreshIndex } from '../../hooks';
 
 export default function GodefatherTab() {
     const [godfatherInfosLoaded, setGodFatherInfosLoaded] = useState(false);
@@ -119,6 +120,13 @@ export default function GodefatherTab() {
         setGodFatherInfosLoaded(false);
         setGodfatherPictureLoaded(false);
     }, []);
+
+    const godfatherRefreshIndex = useGodfatherRefreshIndex();
+    useEffect(() => {
+        if (godfatherInfosLoaded || godfatherPictureLoaded) {
+            toggleRefresh();
+        }
+    }, [godfatherRefreshIndex]);
 
     return (
         <Layout style={styles.container} level='1'>
