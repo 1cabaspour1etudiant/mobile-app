@@ -27,6 +27,8 @@ import { EvaIconsPack } from '@ui-kitten/eva-icons';
 import { NofificationContextProvider } from './src/NotificationModal';
 import ProvideCodeAndPassword from './src/screens/ForgotPassword/ProvideCodeAndPassword';
 import { default as theme } from './theme.json';
+import { NotificationData, NOTIFICATION_TYPES } from './src/types';
+import { actionPrivateUserRefreshGodfatherTab, actionPrivateUserRefreshGodsonTab, actionPrivateUserRefreshRequestTab, actionPrivateUserRefreshSearchTab, actionPrivateUserSetHasGodfather } from './src/screens/Private/user.action';
 
 const Stack = createStackNavigator();
 
@@ -48,7 +50,24 @@ if (Platform.OS === 'android') {
 }
 
 function handleNotification(notification: Notifications.Notification, tap?:boolean) {
+  const data = notification.request.content.data as NotificationData 
+  if (data) {
+    switch (data.type) {
+      case NOTIFICATION_TYPES.SPONSORSHIP_ACCEPTED:
+        Store.dispatch(actionPrivateUserRefreshGodfatherTab());
+        Store.dispatch(actionPrivateUserRefreshGodsonTab());
+        Store.dispatch(actionPrivateUserRefreshRequestTab());
+        break;
 
+      case NOTIFICATION_TYPES.SPONSORSHIP_REQUEST:
+        Store.dispatch(actionPrivateUserRefreshRequestTab());
+        Store.dispatch(actionPrivateUserRefreshSearchTab());
+        break;
+
+      default:
+        break;
+    }
+  }
 }
 
 export default function App() {

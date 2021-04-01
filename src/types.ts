@@ -51,3 +51,9 @@ export enum NOTIFICATION_TYPES {
     SPONSORSHIP_REQUEST = 'SPONSORSHIP_REQUEST',
     SPONSORSHIP_ACCEPTED = 'SPONSORSHIP_ACCEPTED',
 };
+
+export type NotificationData = {
+    emitterId: number;
+    date: Date;
+    type: NOTIFICATION_TYPES;
+};
