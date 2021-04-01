@@ -25,6 +25,9 @@ export type UserState = {
     infos: UserInfos,
     profilePicture: string;
     hasGodfather: boolean;
+    requestTabRefreshIndex: number;
+    godFatherTabRefreshIndex: number;
+    searchTabRefreshIndex: number;
 }
 
 export interface TokenState {
