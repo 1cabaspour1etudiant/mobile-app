@@ -46,3 +46,8 @@ export type State = {
     user: UserState,
     forgottenPassword: ForgottenPasswordState,
 }
+
+export enum NOTIFICATION_TYPES {
+    SPONSORSHIP_REQUEST = 'SPONSORSHIP_REQUEST',
+    SPONSORSHIP_ACCEPTED = 'SPONSORSHIP_ACCEPTED',
+};
