@@ -5,6 +5,7 @@ import {
     PRIVATE_USER_SET_HAS_GODFATHER,
     PRIVATE_USER_REFRESH_SEARCH_TAB,
     PRIVATE_USER_REFRESH_GODFATHER_TAB,
+    PRIVATE_USER_REFRESH_REQUEST_TAB,
 } from './user.action';
 
 const initialInfos:UserInfos = {
@@ -47,6 +48,9 @@ export default function(state = initialState, action: any) {
 
         case PRIVATE_USER_REFRESH_GODFATHER_TAB:
             return { ...state, godFatherTabRefreshIndex: state.godFatherTabRefreshIndex + 1};
+
+        case PRIVATE_USER_REFRESH_REQUEST_TAB:
+            return { ...state, requestTabRefreshIndex: state.requestTabRefreshIndex + 1};
 
         default:
             return state;
