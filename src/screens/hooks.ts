@@ -89,6 +89,26 @@ export function useUserHasGodfather() {
   return hasGodfather;
 }
 
+export function useSearchRefreshIndex() {
+  const { searchTabRefreshIndex } = useUser();
+  return searchTabRefreshIndex;
+}
+
+export function useGodfatherRefreshIndex() {
+  const { godfatherTabRefreshIndex } = useUser();
+  return godfatherTabRefreshIndex;
+}
+
+export function useGodsonRefreshIndex() {
+  const { godsonTabRefreshIndex } = useUser();
+  return godsonTabRefreshIndex;
+}
+
+export function useRequestRefreshIndex() {
+  const { requestTabRefreshIndex } = useUser();
+  return requestTabRefreshIndex;
+}
+
 /**
  *
  * @param {boolean} enabled
