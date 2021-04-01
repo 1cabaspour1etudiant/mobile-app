@@ -6,7 +6,7 @@ import { getUserSearch } from '../../../api/User';
 import { UserSearch } from '../../../api/types';
 import SpinnerList from '../../../components/SpinnerList';
 import SearchUserListItem from './SearchUserListItem';
-import { useUserHasGodfather } from '../../hooks';
+import { useSearchRefreshIndex, useUserHasGodfather } from '../../hooks';
 
 export default function SearchTab() {
     const [loaded, setLoaded] = useState(false);
@@ -15,6 +15,36 @@ export default function SearchTab() {
     const [lastPage, setLastPage] = useState(false);
 
     const hasGodfather = useUserHasGodfather();
+
+    const searchRefreshIndex = useSearchRefreshIndex();
+
+    useEffect(() => {
+        if (loaded) {
+            let mounted = true;
+
+            (async () => {
+                const users:UserSearch[] = [];
+                for (let i = 0; i <= page; i++) {
+                    const { items } = await getUserSearch(page, 20);
+                    if (!mounted) {
+                        break;
+                    }
+                    users.push(...items);
+                }
+
+                if (mounted) {
+                    setUsers(users);
+                }
+            })()
+                .catch((error) => {
+                    console.log(error);
+                });
+
+            return () => {
+                mounted = false;
+            };
+        }
+    }, [searchRefreshIndex]);
 
     useEffect(() => {
         if (!loaded) {
