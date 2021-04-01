@@ -1,13 +1,15 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { StyleSheet, View, Image, TouchableOpacity, Linking, Alert } from 'react-native';
 import { Layout, Icon, Button, Text } from '@ui-kitten/components';
-import { getSponsorshipGodsonGodfather, getUserProfilePicture } from '../../../api/User';
+import { getSponsorshipGodsonGodfather, getUserMeInfos, getUserProfilePicture } from '../../../api/User';
 import { GodfatherInfos } from '../../../api/types';
 import {default as theme} from '../../../../theme.json';
 import * as SMS from 'expo-sms';
 import { deleteSponsorship } from '../../../api/Sponsorship';
 import { useNotifiCationModal } from '../../../NotificationModal';
 import { useGodfatherRefreshIndex } from '../../hooks';
+import { useDispatch } from 'react-redux';
+import { actionPrivateUserRefreshSearchTab, actionPrivateUserSetInfos } from '../user.action';
 
 export default function GodefatherTab() {
     const [godfatherInfosLoaded, setGodFatherInfosLoaded] = useState(false);
@@ -16,6 +18,7 @@ export default function GodefatherTab() {
     const [godfatherPicture, setGodfatherPicture] = useState('');
     const [godfatherNotFound, setGodfatherNotFound] = useState(false);
 
+    const dispatch = useDispatch();
     useEffect(() => {
         if (!godfatherInfosLoaded) {
             let mounted = true;
@@ -26,6 +29,7 @@ export default function GodefatherTab() {
                     if (mounted) {
                         setGodfatherInfos(godfatherInfos);
                         setGodFatherInfosLoaded(true);
+                        setGodfatherNotFound(false);
                     }
                 })
                 .catch((error) => {
@@ -102,6 +106,14 @@ export default function GodefatherTab() {
                                     setGodfatherPictureLoaded(false);
                                     setGodfatherInfos(null);
                                     setGodfatherPicture('');
+
+                                    getUserMeInfos()
+                                        .then((userMeInfos) => {
+                                            dispatch(actionPrivateUserSetInfos(userMeInfos));
+                                        })
+                                        .catch((error) => {
+                                            console.log(error);
+                                        });
                                 })
                                 .finally(() => {
                                     hideNotification();
@@ -114,7 +126,7 @@ export default function GodefatherTab() {
                     text:'Annuler'
                 }
             ])
-    }, [godfatherInfos]);
+    }, [godfatherInfos, dispatch]);
 
     const toggleRefresh = useCallback(() => {
         setGodFatherInfosLoaded(false);
