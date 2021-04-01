@@ -27,6 +27,7 @@ export default function DrawerContent() {
     return (
         <Layout style={styles.container} level='1'>
             <View style={styles.topSection}>
+                <TouchableWithoutFeedback onPress={togglePressProfilePicture}>
                 {
                     profilePicture === '' ? (
                         <Icon
@@ -35,16 +36,14 @@ export default function DrawerContent() {
                             style={styles.pictureProfile}
                         />
                     ) : (
-                        <TouchableWithoutFeedback
-                            onPress={togglePressProfilePicture}
-                        >
+                        
                             <Image
                                 source={{ uri:`data:;base64, ${profilePicture}` }}
                                 style={styles.pictureProfile}
                             />
-                        </TouchableWithoutFeedback>
                     )
                 }
+                </TouchableWithoutFeedback>
                 <View style={styles.fullnameContainer}>
                     <Text category='h5'>{userInfos.firstname}</Text>
                     <Text category='h5'>{userInfos.lastname}</Text>
