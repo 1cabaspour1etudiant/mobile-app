@@ -6,12 +6,14 @@ import { UserSearch } from '../../../api/types';
 import { useDistance, useUserInfos } from '../../hooks';
 import { postSponsorship } from '../../../api/Sponsorship';
 import { useNotifiCationModal } from '../../../NotificationModal';
+import { useDispatch } from 'react-redux';
+import { actionPrivateUserRefreshSearchTab } from '../user.action';
 
 export default function SearchUserListItem({ id, firstname, distance, contacted }: UserSearch) {
     const [ pictureLoaded, setPictureLoaded ] = useState(false);
-    const [contactRequestSent, setContactRequestSent] = useState(false);
     const [ picture, setPicture ] = useState('');
 
+    const dispatch = useDispatch();
     useEffect(() => {
         if (!pictureLoaded) {
             let mounted = true;
@@ -41,7 +43,7 @@ export default function SearchUserListItem({ id, firstname, distance, contacted 
     const toggleSendContactRequest = useCallback(() => {
         let godfatherId;
         let godsonId;
-        
+
         if (status === 'godfather') {
             godfatherId = userId;
             godsonId = id;
@@ -53,7 +55,7 @@ export default function SearchUserListItem({ id, firstname, distance, contacted 
         showNotification();
         postSponsorship(godfatherId, godsonId)
             .then(() => {
-                setContactRequestSent(true);
+                dispatch(actionPrivateUserRefreshSearchTab());
             })
             .catch((error) => {
                 console.log(error);
@@ -61,10 +63,10 @@ export default function SearchUserListItem({ id, firstname, distance, contacted 
             .finally(() => {
                 hideNotification();
             });
-    }, [userId, status, id, showNotification, hideNotification]);
+    }, [userId, status, id, showNotification, hideNotification, dispatch]);
 
     const renderItemAccessoryRight = useCallback((props) => {
-        if (contactRequestSent || contacted) {
+        if (contacted) {
             return (
                 <Icon {...props} name='checkmark-outline' />
             );
@@ -78,7 +80,7 @@ export default function SearchUserListItem({ id, firstname, distance, contacted 
                 contacter
             </Button>
         );
-    }, [toggleSendContactRequest, contactRequestSent, contacted]);
+    }, [toggleSendContactRequest, contacted]);
 
     const renderItemAccessoryLeft = useCallback((props) => {
         if (pictureLoaded) {
