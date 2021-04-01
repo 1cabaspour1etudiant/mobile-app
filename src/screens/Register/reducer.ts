@@ -8,10 +8,9 @@ import {
     REGISTER_SET_CITY,
     REGISTER_SET_ZIP_CODE,
     REGISTER_SET_STATUS,
-    REGISTER_SET_ACTIVITY_AREA,
 } from './action';
 
-import { activityAreaList, statusList } from './lists';
+import { statusList } from './lists';
 import { UserRegister } from './types';
 
 const initialState: UserRegister = {
@@ -24,7 +23,6 @@ const initialState: UserRegister = {
     city: '',
     zipCode: '',
     status: statusList[0],
-    activityArea: activityAreaList[0],
 };
 
 export default function(state = initialState, action: any): UserRegister {
@@ -55,9 +53,6 @@ export default function(state = initialState, action: any): UserRegister {
 
         case REGISTER_SET_STATUS:
             return {...state, status: action.value};
-
-        case REGISTER_SET_ACTIVITY_AREA:
-            return {...state, activityArea: action.value};
 
         default:
             return state;

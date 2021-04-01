@@ -8,5 +8,4 @@ export interface UserRegister {
     city: string;
     zipCode: string;
     status: string;
-    activityArea: string;
 }

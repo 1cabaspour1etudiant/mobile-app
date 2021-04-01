@@ -7,7 +7,6 @@ export const REGISTER_SET_ADRESS = 'REGISTER_SET_ADRESS';
 export const REGISTER_SET_CITY = 'REGISTER_SET_CITY';
 export const REGISTER_SET_ZIP_CODE = 'REGISTER_SET_ZIP_CODE';
 export const REGISTER_SET_STATUS = 'REGISTER_SET_STATUS';
-export const REGISTER_SET_ACTIVITY_AREA = 'REGISTER_SET_ACTIVITY_AREA';
 
 export function actionRegisterSetEmail(email: string) {
     return {
@@ -69,12 +68,5 @@ export function actionRegisterSetStatus(status: string) {
     return {
         type: REGISTER_SET_STATUS,
         value: status,
-    };
-}
-
-export function actionRegisterSetActivityArea(activityArea: string) {
-    return {
-        type: REGISTER_SET_ACTIVITY_AREA,
-        value: activityArea,
     };
 }

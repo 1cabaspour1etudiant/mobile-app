@@ -6,16 +6,11 @@ import {
     Text,
     Input,
     Button,
-    Select,
-    SelectItem,
-    IndexPath,
     CheckBox,
-    Divider,
 
 } from '@ui-kitten/components';
 
 import {
-    actionRegisterSetActivityArea,
     actionRegisterSetAdress,
     actionRegisterSetCity,
     actionRegisterSetFirstname,
@@ -25,7 +20,6 @@ import {
     actionRegisterSetZipCode,
 } from './action';
 
-import { activityAreaList, statusList } from './lists';
 import { useNavigation } from '@react-navigation/core';
 import { useNotifiCationModal } from '../../NotificationModal';
 import { postUser } from '../../api/User';
@@ -42,7 +36,6 @@ const selector = ({
         city = '',
         zipCode = '',
         status = '',
-        activityArea = '',
     },
 }) => ({
     email,
@@ -54,7 +47,6 @@ const selector = ({
     city,
     zipCode,
     status,
-    activityArea,
 });
 
 export default function RegisterMainInfos() {
@@ -68,7 +60,6 @@ export default function RegisterMainInfos() {
         city,
         zipCode,
         status,
-        activityArea,
     } = useSelector(selector);
     const dispatch = useDispatch();
     const { navigate } = useNavigation();
@@ -78,7 +69,6 @@ export default function RegisterMainInfos() {
     } = useNotifiCationModal();
 
     const [isStudent, setIsStudent] = useState(true);
-    const [selectedActivityAreaIndex, setSelectedActivityAreaIndex] = useState(new IndexPath(0));
 
     const refInputFirstname = useRef(null);
     const refInputLastname = useRef(null);
@@ -123,11 +113,6 @@ export default function RegisterMainInfos() {
         dispatch(actionRegisterSetStatus(newIsStudentValue ? 'Etudiant' : 'Parain'));
     }, [dispatch, isStudent]);
 
-    const toggleOnSelectActivityArea = useCallback((index) => {
-        setSelectedActivityAreaIndex(index);
-        dispatch(actionRegisterSetActivityArea(activityAreaList[index.row]));
-    }, [dispatch]);
-
     const toggleOnPressSaveButton = useCallback(() => {
         if (
             firstname === ''
@@ -150,7 +135,6 @@ export default function RegisterMainInfos() {
             city,
             zipCode,
             status,
-            activityArea,
         };
 
         postUser(user)
@@ -173,7 +157,6 @@ export default function RegisterMainInfos() {
         city,
         zipCode,
         status,
-        activityArea,
     ]);
 
     return (
@@ -281,23 +264,6 @@ export default function RegisterMainInfos() {
                             Etudiant
                         </CheckBox>
                     </View>
-                </Layout>
-                <Layout style={styles.rowContainer} level='1'>
-                    <Select
-                        style={styles.input}
-                        value={activityArea}
-                        onSelect={toggleOnSelectActivityArea}
-                        selectedIndex={selectedActivityAreaIndex}
-                    >
-                        {
-                            activityAreaList.map((activityArea) => (
-                                <SelectItem
-                                    key={activityArea}
-                                    title={activityArea}
-                                />
-                            ))
-                        }
-                    </Select>
                 </Layout>
                 <Button
                     style={styles.button}
