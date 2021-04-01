@@ -1,13 +1,13 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Image, StyleSheet, View } from 'react-native';
 import { Button, Icon, ListItem } from '@ui-kitten/components';
-import { getUserInfos, getUserProfilePicture} from '../../../api/User';
+import { getUserInfos, getUserMeHasGodfather, getUserProfilePicture} from '../../../api/User';
 import { GetUserInfos, Sponsorship } from '../../../api/types';
 import { useDistance } from '../../hooks';
 import { putSponsorshipAccept, deleteSponsorship } from '../../../api/Sponsorship';
 import { useNotifiCationModal } from '../../../NotificationModal';
 import { useDispatch } from 'react-redux';
-import { actionPrivateUserRefreshGodfatherTab, actionPrivateUserRefreshGodsonTab } from '../user.action';
+import { actionPrivateUserRefreshGodfatherTab, actionPrivateUserRefreshGodsonTab, actionPrivateUserSetHasGodfather } from '../user.action';
 
 interface ReceivedRequestSponsorshipListItemProps extends Sponsorship {
     triggerRefreshing:() => void
@@ -74,8 +74,17 @@ export default function ReceivedRequestSponsorshipListItem({ sponsorshipId, godf
         putSponsorshipAccept(sponsorshipId)
             .then(() => {
                 triggerRefreshing();
-                dispatch(actionPrivateUserRefreshGodsonTab());
-                dispatch(actionPrivateUserRefreshGodfatherTab());
+                getUserMeHasGodfather()
+                    .then((hasGodfather) => {
+                        dispatch(actionPrivateUserSetHasGodfather(hasGodfather));
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    })
+                    .finally(() => {
+                        dispatch(actionPrivateUserRefreshGodsonTab());
+                        dispatch(actionPrivateUserRefreshGodfatherTab());
+                    });
             })
             .catch((error) => {
                 console.log(error);
@@ -90,6 +99,17 @@ export default function ReceivedRequestSponsorshipListItem({ sponsorshipId, godf
         deleteSponsorship(sponsorshipId)
             .then(() => {
                 triggerRefreshing();
+                getUserMeHasGodfather()
+                    .then((hasGodfather) => {
+                        dispatch(actionPrivateUserSetHasGodfather(hasGodfather));
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    })
+                    .finally(() => {
+                        dispatch(actionPrivateUserRefreshGodsonTab());
+                        dispatch(actionPrivateUserRefreshGodfatherTab());
+                    });
             })
             .catch((error) => {
                 console.log(error);
@@ -97,7 +117,7 @@ export default function ReceivedRequestSponsorshipListItem({ sponsorshipId, godf
             .finally(() => {
                 hideNotification();
             });
-    }, [sponsorshipId, triggerRefreshing]);
+    }, [sponsorshipId, triggerRefreshing, dispatch]);
 
     const renderItemAccessoryRight = useCallback(() => {
         return (
