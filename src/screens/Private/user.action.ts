@@ -5,6 +5,7 @@ export const PRIVATE_USER_SET_PROFILE_PICTURE = 'PRIVATE_USER_SET_PROFILE_PICTUR
 export const PRIVATE_USER_SET_HAS_GODFATHER = 'PRIVATE_USER_SET_HAS_GODFATHER';
 
 export const PRIVATE_USER_REFRESH_SEARCH_TAB = 'PRIVATE_USER_REFRESH_SEARCH_TAB';
+export const PRIVATE_USER_REFRESH_GODFATHER_TAB = 'PRIVATE_USER_REFRESH_GODFATHER_TAB';
 
 export function actionPrivateUserSetInfos(infos: UserInfos) {
     return {
@@ -30,5 +31,11 @@ export function actionPrivateUserSetHasGodfather(hasGodfather: boolean) {
 export function actionPrivateUserRefreshSearchTab() {
     return {
         type: PRIVATE_USER_REFRESH_SEARCH_TAB,
+    };
+}
+
+export function actionPrivateUserRefreshGodfatherTab() {
+    return {
+        type: PRIVATE_USER_REFRESH_GODFATHER_TAB,
     };
 }
