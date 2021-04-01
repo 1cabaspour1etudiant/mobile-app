@@ -9,8 +9,9 @@ import { postLogin } from '../../api/Auth';
 import { useNavigation } from '@react-navigation/core';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { useNotifiCationModal } from '../../NotificationModal';
-import { getUserMeHasGodfather, getUserMeInfos, getUserMeProfilePicture } from '../../api/User';
+import { getUserMeHasGodfather, getUserMeInfos, getUserMeProfilePicture, patchUserMe } from '../../api/User';
 import { actionPrivateUserSetHasGodfather, actionPrivateUserSetInfos, actionPrivateUserSetProfilePicture } from '../Private/user.action';
+import { registerForPushNotificationsAsync } from '../utils';
 
 const selector = ({ login:{ email = '', password = '' } }) => ({ email, password });
 
@@ -42,6 +43,14 @@ export default function LoginScreen() {
     showNotification();
     postLogin(email, password)
       .then(async () => {
+        registerForPushNotificationsAsync()
+          .then((pushToken) => patchUserMe({ pushToken })
+            .catch((e) => { console.log('patchUsersMeAPI', e); })
+          )
+          .catch((e) => {
+            console.log('registerForPushNotificationsAsync', e);
+          });
+
         const [
           userMeInfos,
           userMeProfilePicture,

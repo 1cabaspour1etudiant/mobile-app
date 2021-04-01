@@ -65,4 +65,5 @@ export type UserPathInfos = {
     zipCode?:string;
     city?:string;
     password?:string;
+    pushToken?:string;
 };
