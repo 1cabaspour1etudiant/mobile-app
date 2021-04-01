@@ -24,6 +24,7 @@ export default function GodsonTab() {
                         setPage(page);
                         setLastPage(lastPage);
                         setGodsons([...godsons, ...items]);
+                        console.log(items);
                         setGodsonsLoaded(true);
                     }
                 })
@@ -36,6 +37,8 @@ export default function GodsonTab() {
             };
         }
     }, [godsonsLoaded]);
+
+    console.log(godsonsLoaded);
 
     useEffect(() => {
         if (refreshing) {
@@ -100,10 +103,6 @@ export default function GodsonTab() {
         }
     }, [refreshing]);
 
-    const toggleRefresh = useCallback(() => {
-        setGodsonsLoaded(false);
-    }, [])
-
     return (
         <Layout style={{ flex: 1 }} level='1'>
             {
@@ -112,7 +111,7 @@ export default function GodsonTab() {
                         <Text category='h6'>Vous n'avez pas de filleuls</Text>
                         <Button
                             style={styles.buttons}
-                            onPress={toggleRefresh}
+                            onPress={onRefresh}
                         >
                             Rafraîchir
                         </Button>
