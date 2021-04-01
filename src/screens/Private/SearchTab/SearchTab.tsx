@@ -13,6 +13,7 @@ export default function SearchTab() {
     const [users, setUsers] = useState<UserSearch[]>([]);
     const [page, setPage] = useState(-1);
     const [lastPage, setLastPage] = useState(false);
+    const [refreshing, setRefreshing] = useState(false);
 
     const hasGodfather = useUserHasGodfather();
 
@@ -22,10 +23,11 @@ export default function SearchTab() {
         if (loaded) {
             let mounted = true;
 
+            setRefreshing(true);
             (async () => {
                 const users:UserSearch[] = [];
                 for (let i = 0; i <= page; i++) {
-                    const { items } = await getUserSearch(page, 20);
+                    const { items } = await getUserSearch(i, 20);
                     if (!mounted) {
                         break;
                     }
@@ -38,6 +40,11 @@ export default function SearchTab() {
             })()
                 .catch((error) => {
                     console.log(error);
+                })
+                .finally(() => {
+                    if (mounted) {
+                        setRefreshing(false);
+                    }
                 });
 
             return () => {
@@ -47,7 +54,7 @@ export default function SearchTab() {
     }, [searchRefreshIndex]);
 
     useEffect(() => {
-        if (!loaded) {
+        if (!loaded && !refreshing) {
             let mounted = true;
             const abortController = new AbortController();
 
