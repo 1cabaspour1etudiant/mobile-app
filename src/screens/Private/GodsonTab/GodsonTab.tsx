@@ -5,6 +5,7 @@ import { getSponsorshipGodfatherGodsons } from '../../../api/User';
 import { GodsonsInfos } from '../../../api/types';
 import {default as theme} from '../../../../theme.json';
 import GodsonListItem from './GodsonListItem';
+import { useGodsonRefreshIndex } from '../../hooks';
 
 export default function GodsonTab() {
     const [godsonsLoaded, setGodsonsLoaded] = useState(false);
@@ -12,6 +13,38 @@ export default function GodsonTab() {
     const [page, setPage] = useState(-1);
     const [lastPage, setLastPage] = useState(false);
     const [refreshing, setRefreshing] = useState(false);
+
+    const godsonRefreshIndex = useGodsonRefreshIndex();
+
+    useEffect(() => {
+        if (godsonsLoaded) {
+            let mounted = true;
+
+            (async () => {
+                const godsons:GodsonsInfos[] = [];
+
+                for (let i = 0; i <= page; i++) {
+                    const { items } = await getSponsorshipGodfatherGodsons(i, 20);
+                    godsons.push(...items);
+                }
+
+                if (mounted) {
+                    setGodsons(godsons);
+                }
+            })()
+                .catch((error) => {
+                    console.log(error);
+                }).finally(() => {
+                    if (mounted) {
+                        setRefreshing(false);
+                    }
+                });
+
+            return () => {
+                mounted = false;
+            };
+        }
+    }, [godsonRefreshIndex]);
 
     useEffect(() => {
         if (!godsonsLoaded) {
