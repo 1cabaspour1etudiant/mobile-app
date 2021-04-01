@@ -111,7 +111,7 @@ export default function RegisterMainInfos() {
     const toggleOnchangeCheckBoxes = useCallback(() => {
         const newIsStudentValue = !isStudent;
         setIsStudent(newIsStudentValue);
-        dispatch(actionRegisterSetStatus(newIsStudentValue ? 'Etudiant' : 'Parain'));
+        dispatch(actionRegisterSetStatus(newIsStudentValue ? 'godson' : 'godfather'));
     }, [dispatch, isStudent]);
 
     const toggleOnPressSaveButton = useCallback(() => {

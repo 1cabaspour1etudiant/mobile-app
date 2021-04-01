@@ -1,1 +1,1 @@
-export const statusList = ['Etudiant', 'Parrain'];
+export const statusList = ['godson', 'godfather'];
