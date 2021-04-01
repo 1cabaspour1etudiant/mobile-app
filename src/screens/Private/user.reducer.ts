@@ -28,7 +28,7 @@ const initialState:UserState = {
     profilePicture: '',
     hasGodfather: false,
     requestTabRefreshIndex: 0,
-    godFatherTabRefreshIndex: 0,
+    godfatherTabRefreshIndex: 0,
     searchTabRefreshIndex: 0,
 };
 
@@ -47,7 +47,7 @@ export default function(state = initialState, action: any) {
             return { ...state, searchTabRefreshIndex: state.searchTabRefreshIndex + 1};
 
         case PRIVATE_USER_REFRESH_GODFATHER_TAB:
-            return { ...state, godFatherTabRefreshIndex: state.godFatherTabRefreshIndex + 1};
+            return { ...state, godfatherTabRefreshIndex: state.godfatherTabRefreshIndex + 1};
 
         case PRIVATE_USER_REFRESH_REQUEST_TAB:
             return { ...state, requestTabRefreshIndex: state.requestTabRefreshIndex + 1};

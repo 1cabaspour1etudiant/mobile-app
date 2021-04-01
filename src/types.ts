@@ -26,7 +26,8 @@ export type UserState = {
     profilePicture: string;
     hasGodfather: boolean;
     requestTabRefreshIndex: number;
-    godFatherTabRefreshIndex: number;
+    godfatherTabRefreshIndex: number;
+    godsonTabRefreshIndex: number;
     searchTabRefreshIndex: number;
 }
 
