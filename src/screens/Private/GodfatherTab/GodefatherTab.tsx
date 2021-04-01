@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { StyleSheet, View, Image, TouchableOpacity, Linking, Alert } from 'react-native';
 import { Layout, Icon, Button, Text } from '@ui-kitten/components';
-import { getSponsorshipGodsonGodfather, getUserMeInfos, getUserProfilePicture } from '../../../api/User';
+import { getSponsorshipGodsonGodfather, getUserMeHasGodfather, getUserMeInfos, getUserProfilePicture } from '../../../api/User';
 import { GodfatherInfos } from '../../../api/types';
 import {default as theme} from '../../../../theme.json';
 import * as SMS from 'expo-sms';
@@ -9,7 +9,7 @@ import { deleteSponsorship } from '../../../api/Sponsorship';
 import { useNotifiCationModal } from '../../../NotificationModal';
 import { useGodfatherRefreshIndex } from '../../hooks';
 import { useDispatch } from 'react-redux';
-import { actionPrivateUserRefreshSearchTab, actionPrivateUserSetInfos } from '../user.action';
+import { actionPrivateUserRefreshGodfatherTab, actionPrivateUserRefreshSearchTab, actionPrivateUserSetHasGodfather, actionPrivateUserSetInfos } from '../user.action';
 
 export default function GodefatherTab() {
     const [godfatherInfosLoaded, setGodFatherInfosLoaded] = useState(false);
@@ -19,6 +19,7 @@ export default function GodefatherTab() {
     const [godfatherNotFound, setGodfatherNotFound] = useState(false);
 
     const dispatch = useDispatch();
+    const godfatherRefreshIndex = useGodfatherRefreshIndex();
     useEffect(() => {
         if (!godfatherInfosLoaded) {
             let mounted = true;
@@ -27,9 +28,9 @@ export default function GodefatherTab() {
             getSponsorshipGodsonGodfather(abortController)
                 .then((godfatherInfos) => {
                     if (mounted) {
+                        setGodfatherNotFound(false);
                         setGodfatherInfos(godfatherInfos);
                         setGodFatherInfosLoaded(true);
-                        setGodfatherNotFound(false);
                     }
                 })
                 .catch((error) => {
@@ -43,7 +44,7 @@ export default function GodefatherTab() {
                 mounted = false;
             };
         }
-    }, [godfatherInfosLoaded]);
+    }, [godfatherInfosLoaded, godfatherRefreshIndex]);
  
     useEffect(() => {
         if (godfatherInfosLoaded && !godfatherPictureLoaded && godfatherInfos) {
@@ -106,11 +107,11 @@ export default function GodefatherTab() {
                                     setGodfatherPictureLoaded(false);
                                     setGodfatherInfos(null);
                                     setGodfatherPicture('');
-
-                                    getUserMeInfos()
-                                        .then((userMeInfos) => {
-                                            dispatch(actionPrivateUserSetInfos(userMeInfos));
-                                        })
+                                    dispatch(actionPrivateUserRefreshSearchTab());
+                                    getUserMeHasGodfather()
+                                        .then((hasGodfather) => {
+                                            dispatch(actionPrivateUserSetHasGodfather(hasGodfather));
+                                        }) 
                                         .catch((error) => {
                                             console.log(error);
                                         });
@@ -129,16 +130,8 @@ export default function GodefatherTab() {
     }, [godfatherInfos, dispatch]);
 
     const toggleRefresh = useCallback(() => {
-        setGodFatherInfosLoaded(false);
-        setGodfatherPictureLoaded(false);
-    }, []);
-
-    const godfatherRefreshIndex = useGodfatherRefreshIndex();
-    useEffect(() => {
-        if (godfatherInfosLoaded || godfatherPictureLoaded) {
-            toggleRefresh();
-        }
-    }, [godfatherRefreshIndex]);
+        dispatch(actionPrivateUserRefreshGodfatherTab());
+    }, [dispatch]);
 
     return (
         <Layout style={styles.container} level='1'>
