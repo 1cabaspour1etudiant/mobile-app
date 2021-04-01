@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Image, StyleSheet, View } from 'react-native';
 import { Button, Icon, ListItem } from '@ui-kitten/components';
 import { getUserInfos, getUserProfilePicture} from '../../../api/User';
@@ -6,6 +6,8 @@ import { GetUserInfos, Sponsorship } from '../../../api/types';
 import { useDistance } from '../../hooks';
 import { putSponsorshipAccept, deleteSponsorship } from '../../../api/Sponsorship';
 import { useNotifiCationModal } from '../../../NotificationModal';
+import { useDispatch } from 'react-redux';
+import { actionPrivateUserRefreshGodfatherTab, actionPrivateUserRefreshGodsonTab } from '../user.action';
 
 interface ReceivedRequestSponsorshipListItemProps extends Sponsorship {
     triggerRefreshing:() => void
@@ -18,6 +20,7 @@ export default function ReceivedRequestSponsorshipListItem({ sponsorshipId, godf
     const [ emitterPictureLoaded, setEmitterPictureLoaded ] = useState(false);
     const [ emitterPicture, setEmitterPicture ] = useState('');
 
+    const dispatch = useDispatch();
     useEffect(() => {
         if (!emitterPictureLoaded) {
             let mounted = true;
@@ -71,6 +74,8 @@ export default function ReceivedRequestSponsorshipListItem({ sponsorshipId, godf
         putSponsorshipAccept(sponsorshipId)
             .then(() => {
                 triggerRefreshing();
+                dispatch(actionPrivateUserRefreshGodsonTab());
+                dispatch(actionPrivateUserRefreshGodfatherTab());
             })
             .catch((error) => {
                 console.log(error);
@@ -78,7 +83,7 @@ export default function ReceivedRequestSponsorshipListItem({ sponsorshipId, godf
             .finally(() => {
                 hideNotification();
             });
-    }, [sponsorshipId, triggerRefreshing]);
+    }, [sponsorshipId, triggerRefreshing, dispatch]);
 
     const toggleRefuseButtonClick = useCallback(() => {
         showNotification();
