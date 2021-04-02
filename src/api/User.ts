@@ -1,5 +1,5 @@
 import { API_URL } from '@env';
-import { UserRegister } from '../screens/Register/types';
+import { UserRegister } from '../types';
 import { checkError, getAccessToken, jsonMapper } from './utils';
 import Store from '../../store';
 import { actionSetToken } from '../screens/token.action';
